@@ -1,0 +1,174 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    background: #F8F9FA;
+    font-family: "Nunito";
+    font-size: 20px;
+}
+
+.navbar{
+    display: flex;
+    padding: 20px 40px;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #8A9BAC;
+}
+
+.logo img{
+    height: 70px;
+    border-radius: 100%;
+}
+
+.links{
+    display: flex;
+    gap: 15px;
+}
+
+
+.section{
+    text-decoration:none;
+    color: #000
+}
+.section:hover{
+    color: #596C7E;
+}
+
+.banner{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    height: 520px;
+    background:linear-gradient(#000b, #0008),
+        url(../images/banner.jpeg);
+    background-position: center;
+    background-size: cover;
+}
+
+.banner h1, .banner h2{
+    color: #fff;
+    margin: 2px;
+}
+.banner h1{
+    font-family: "Playfair Display";
+    font-size: 4em;
+    font-weight: 800;
+}
+
+.banner h2{
+    font-family: "Nunito";
+    font-size: 1em;
+    font-weight: 400;
+}
+
+.description{
+    padding: 50px 30vh;
+    text-align: center;
+    margin: 0;
+}
+
+.inst{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    padding: 50px 30vh;
+}
+
+.card{
+    height: auto;
+    display: flex;
+    flex:1 1 250px;
+    flex-direction: column;
+    padding: 30px 30px;
+    background: #fff;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    gap:5px;
+    
+
+}
+.card_header{
+    display: flex;
+    justify-content:start;
+    align-items: center;
+    padding: 5px 5px;
+    font-family: "Poppins";
+    font-weight: 700;
+    font-size: 1.2em;
+    gap: 15px;
+}
+
+.card_header img{
+    height: 54px;
+}
+
+.card_cont{
+    font-size: 0.9em;
+}
+
+.valores{
+    padding: 50px 30vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 50px;
+    
+}
+.valores h2{
+    font-family: "Playfair Display";
+    font-size: 2em;
+    font-weight:900;
+}
+
+.grid_valoress{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+    justify-content: center;
+    gap: 50px;
+}
+.grid_valores{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    gap: 50px;
+}
+
+.card_valores{
+    height: auto;
+    display: flex;
+    flex:1 1 310px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 30px;
+    background: #fff;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    gap:10px;
+    font-family: "Poppins";
+    font-size: 0.9em;
+    font-weight: 700;
+    max-width: 310px;
+}
+.card_valores p{
+    font-family: "Nunito";
+    font-weight: 400;
+    font-size: 0.9em;
+    color:#475569;
+}
+.card_valores img{
+    height: 72px;
+    border-radius: 50%; 
+}
