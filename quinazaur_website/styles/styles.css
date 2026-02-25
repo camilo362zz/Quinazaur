@@ -1,42 +1,133 @@
+
+/* ===Estilos Etiquetas Principales=== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+html{
+    font-size: 20px;
+}
 body{
+    width: 100%;
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     background: #F8F9FA;
     font-family: "Nunito";
-    font-size: 20px;
 }
 
+main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+footer{
+    background:#F8F9Fd;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: "Plus Jakarta Sans";
+    font-size: 0.7rem;
+    font-weight: 400;
+    color:#64748B;
+    padding: 50px 40px;
+    line-height: 1.5rem;
+}
+footer img{
+    width: 100px;
+    margin: 0px;
+    padding: 0px;
+}
+
+
+/* ===ANIMACIONES=== */
+@keyframes banner_animado{
+    20%{
+        background:linear-gradient(#000a, #000c),
+        url(../images/banner1.jpg);
+        background-position: center;
+        background-size: cover;
+    }
+    40%{
+        background:linear-gradient(#000a, #000c),
+        url(../images/banner2.jpg);
+        background-position: bottom;
+        background-size: cover;
+    }
+    60%{
+        background:linear-gradient(#000a, #000c),
+        url(../images/banner3.jpg);
+        background-position: center;
+        background-size: cover; 
+    }
+    80%{
+        background:linear-gradient(#000a, #000c),
+        url(../images/banner4.jpg);
+        background-position: top;
+        background-size: cover;
+    }
+    100%{
+        background:linear-gradient(#000a, #000c),
+        url(../images/banner5.jpg);
+        background-position: center;
+        background-size: cover;
+        }
+}
+
+
+/* ===ESTILOS PARA CLASES=== */
 .navbar{
     display: flex;
     padding: 20px 40px;
+    width: 100%;
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid #8A9BAC;
+    height: clamp(30px,10vh,70px);
 }
 
+.logo{
+    height: clamp(30px,10vh,70px);
+    padding: 0px;
+}
 .logo img{
-    height: 70px;
-    border-radius: 100%;
+    height: 100%;
 }
 
 .links{
     display: flex;
     gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: right;
 }
-
 
 .section{
     text-decoration:none;
-    color: #000
+    color: #596C7E;
+    font-family: "Plus Jakarta Sans";
+    font-size: clamp(0.5rem,4vw,0.9rem);
+    transition: transform 0.25s ease;
 }
 .section:hover{
-    color: #596C7E;
+    color: #000;
+    transform: scale(1.05);
+}
+.section img{
+    width: 30px;
+    margin-left: 2px;
+    transition: transform 0.25s ease, filter 0.25s ease;
+}
+.section img:hover{
+    transform: scale(1.05);
+    filter:brightness(0)
 }
 
 .banner{
@@ -46,41 +137,42 @@ body{
     justify-content: center;
     align-items: center;
     height: 520px;
-    background:linear-gradient(#000b, #0008),
-        url(../images/banner.jpeg);
-    background-position: center;
-    background-size: cover;
+    background:linear-gradient(#000a, #000c),url(../images/banner2.jpg);
+    background-position: top;
+    animation: banner_animado 150s infinite;     
 }
-
 .banner h1, .banner h2{
     color: #fff;
     margin: 2px;
+    text-align: center;
 }
 .banner h1{
     font-family: "Playfair Display";
-    font-size: 4em;
+    font-size: clamp(3rem, 15vw, 7rem);
     font-weight: 800;
 }
-
 .banner h2{
     font-family: "Nunito";
-    font-size: 1em;
+    font-size: clamp(0.5rem,4vw,1rem);
     font-weight: 400;
 }
 
-.description{
-    padding: 50px 30vh;
+.descripcion{
+    display: flex;
+    flex-direction: column;
+    padding: 50px 15vw;
     text-align: center;
     margin: 0;
+    font-size: clamp(0.5rem,4vw,1rem)
 }
 
-.inst{
+.info_institucional{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
     gap: 50px;
-    padding: 50px 30vh;
+    padding: 50px 20vw;
 }
 
 .card{
@@ -91,11 +183,18 @@ body{
     padding: 30px 30px;
     background: #fff;
     border: 1px solid #E2E8F0;
-    border-radius: 16px;
+    border-radius: 5px;
     gap:5px;
-    
-
+    border-left: solid 3px #E2E8F0;
+    border-top: solid 3px #E2E8F0;
+    box-shadow: 4px 4px 5px 1px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
 }
+.card:hover{
+    transform: scale(1.08);
+    box-shadow: none;
+}
+
 .card_header{
     display: flex;
     justify-content:start;
@@ -103,20 +202,19 @@ body{
     padding: 5px 5px;
     font-family: "Poppins";
     font-weight: 700;
-    font-size: 1.2em;
+    font-size: 1.2rem;
     gap: 15px;
 }
-
 .card_header img{
     height: 54px;
 }
 
 .card_cont{
-    font-size: 0.9em;
+    font-size: 0.9rem;
 }
 
 .valores{
-    padding: 50px 30vh;
+    padding: 50px 10vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -125,19 +223,13 @@ body{
     gap: 50px;
     
 }
-.valores h2{
+.valores h2 {
     font-family: "Playfair Display";
-    font-size: 2em;
+    font-size: 2.5rem;
     font-weight:900;
 }
 
-.grid_valoress{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
-    justify-content: center;
-    gap: 50px;
-}
-.grid_valores{
+.container_valores{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -155,20 +247,157 @@ body{
     padding: 30px 30px;
     background: #fff;
     border: 1px solid #E2E8F0;
-    border-radius: 16px;
+    border-bottom: 3px solid #0005;
+    border-radius: 20px 16px 0 0;
+    box-shadow: 2px -4px 8px 2px #0001;
     gap:10px;
     font-family: "Poppins";
-    font-size: 0.9em;
+    font-size: 0.9rem;
     font-weight: 700;
     max-width: 310px;
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+.card_valores:hover{
+    transform: scale(1.08);
+    box-shadow: none;
 }
 .card_valores p{
     font-family: "Nunito";
     font-weight: 400;
-    font-size: 0.9em;
+    font-size: 0.9rem;
     color:#475569;
 }
 .card_valores img{
     height: 72px;
     border-radius: 50%; 
 }
+
+.proyeccion_social{
+    display: flex;
+    flex-direction: column;
+    gap:40px;
+    padding: 50px 10vw;
+}
+
+.proysoc_header{
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+.proysoc_header h2{
+    text-align: center;
+    font-family: "Playfair Display";
+    font-size: 2.5rem;
+    font-weight:900;
+}
+
+.proysoc_cont{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 60px;
+    justify-content: center;
+    align-items: center;
+}
+.proysoc_cont img{
+    height: clamp(100px, 200px, 250px);
+    border-radius: 16px;
+    box-shadow: 4px 4px 15px 2px #0004;
+}
+
+.ejes {
+    display: flex;
+    flex-direction: column;
+    flex:1 1 450px;
+    gap: 20px;
+}
+
+.card_eje{
+    max-width: 95%;
+    text-align: left;
+    font-family: "Nunito";
+    font-weight: 400;
+    font-size: 0.9rem;
+    color:#475569;
+}
+.card_eje h3{
+    font-family: "Poppins";
+    font-weight: 700;
+}
+
+.contacto{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    width: 80%;
+    margin: auto;
+    padding: clamp(30px,40px,50px);
+    background: #fff;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px 16px 0px 0px;
+}
+
+.card_contacto{
+    display: flex;
+    flex-direction: column;
+    gap: 25px; 
+}
+
+.header_contacto h2{
+    font-family:"Playfair Display";
+    font-size: 2rem;
+    font-weight: 900;
+    padding-bottom: 5px;
+    
+}
+.header_contacto p{
+    font-family: "Nunito";
+    font-weight: 400;
+    font-size: 0.9rem;
+    color:#475569;  
+}
+
+.horarios{
+    display: flex;
+    justify-content: start;
+    align-items:center;
+    gap: 7px;
+}
+.horarios span{
+    font-weight: 900;
+}
+.horarios img{
+    height: 16px;
+}
+.horarios p{
+    color: #475569;
+    font-size: 0.9rem;
+}
+
+.mapa{
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px 16px 0px 0px;
+    border-bottom: 2px solid  #475569;
+    overflow: hidden;
+}
+.mapa iframe{
+    width: clamp(200px,450px,600px);
+    height: clamp(100px,337px,450px);
+}
+
+.links_redes{
+    display: flex;
+    gap: 15px;
+    text-decoration: none;
+    padding: 0px 10px;
+    align-items: center;
+    justify-content: left;
+}
+
+.redes_icon{
+    width: 25px;
+}
+
