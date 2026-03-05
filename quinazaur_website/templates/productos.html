@@ -70,7 +70,7 @@
                         </div>
                         <div class="footer_card">
                             <p class="precio">${{"{:,.0f}".format(producto.precio_producto).replace(",",".")}}</p>
-                            <button class="btn_vermas" data-nombre="{{producto.nombre_producto}}" data-descripcion="{{producto.descripcion_producto}}" data-atributos='{{ producto.atributos | tojson }}' data-precio="{{producto.precio_producto}}" data-img="{{url_for('static',filename=producto.imagen_producto)}}">&#128065 Ver Más</button>
+                            <button class="btn_vermas" data-nombre="{{producto.nombre_producto}}" data-descripcion="{{producto.descripcion_producto}}" data-atributos='{{ producto.atributos | tojson }}' data-precio="{{producto.precio_producto}}" data-img="{{url_for('static',filename=producto.imagen_producto)}}">Ver Más >></button>
                         </div>
                     </div>
                 {% endfor %}
