@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quinazaur</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/recetas.css')}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <script src="../scripts/productos.js"></script>
+
+    
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <img src="{{url_for('static', filename='/images/logo_quinazaur.png')}}" loading="lazy" alt="Logo" title="Inicio">
+            <h1>Recetario Saludable</h1>
+        </div>
+        <nav class="links">
+            <a class="section" href="{{url_for('productos')}}">Productos</a>
+            <a class="section" href="">Compromiso Verde</a>
+            <a class="btn_inicio" href="{{url_for('inicio')}}">Inicio</a>
+        </nav>
+    </header>
+    <main>
+        <section class="encabezado">
+            <img class="img1" src="{{url_for('static', filename='/images/planta_quinua1.png')}}" title="Planta de Quinua" alt="quinua.img" loading="lazy">
+            <div class="texto">
+                <h2>Descubre el sabor de lo <br>natural con la quinua <br>nariñense</h2>
+                <p>Cada plato preparado con productos Quinazaur no solo <br>nutre tu cuerpo, sino que impulsa el bienestar de las <br>familias campesinas que hacen posible estos sabores.</p>
+            </div>
+        </section>    
+        <section class="search-bar">  
+            <form class="buscar">
+                <input type="text" placeholder="Busca tus recetas aquí">
+                <button class="btn-buscar" type="submit">
+                    <img class="buscar-icon" src="{{url_for('static', filename='/images/lupa.png')}}">
+                </button>
+            </form>
+        </section>
+        <section class="recetas">
+            <p class="txt-1">Hecha un vistazo a nuestras recetas</p>
+            <div class="container-recetas">
+                {% for receta in recetas %}
+                    <div class="card-receta">
+                        <div class="card-text">
+                            <div class="text-header">
+                                <h2>{{receta.nombre_receta}}</h2>
+                                <p>{{receta.descripcion_receta}}</p>
+                            </div>
+                            <div class="ingredientes">
+                                <h3>Ingredientes</h3>
+                                <ul>
+                                    {% for ingrediente in receta.ingredientes %}
+                                    <li>
+                                        {% if ingrediente.cantidad=='1' %}
+                                            {{ingrediente.cantidad}} {{ingrediente.ingrediente}}
+                                        {% else %}
+                                            {{ingrediente.cantidad}} de {{ingrediente.ingrediente}}
+                                        {% endif %}
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="preparacion">
+                                <h3>Preparación</h3>
+                                <ol>
+                                    <li>Calienta la leche en una olla pequeña.</li>
+                                    <li>Incorpora la Quinua en Hojuelas Quinazaur junto con la avena, para darle más sabor y proteína a tu desayuno.</li>
+                                    <li>Cocina 5 minutos revolviendo.</li>
+                                    <li>Añade la manzana y la canela.</li>
+                                    <li>Endulza con miel y sirve caliente</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <img class="img-receta" src="{{url_for('static', filename=receta.imagen_receta)}}">
+                    </div>
+                {% endfor %}
+            </div>   
+        </section>     
+        <section class="contacto">
+            <div class="card_contacto">
+                <div class="header_contacto">
+                    <h2>Contacto y Ubicación</h2>
+                    <p>Estamos aquí para ayudarte. Visítanos o ponte
+                    en contacto con nosotros.</p>
+                </div>
+                <div class="horarios">
+                    <img src="{{url_for('static', filename='/images/ubicacion_icon.png')}}" loading="lazy" alt="icon">
+                    <p><span>Ubicación </span>Sapuyes-Nariño</p>
+                </div>
+                <div  class="horarios">
+                    <img src="{{url_for('static', filename='/images/reloj_icon.png')}}" loading="lazy" alt="icon">
+                    <div>
+                        <p><span>Horario </span>Lunes a  viernes: 9:00 am a 5:00pm
+                        </p>
+                        <p>Sábado y Domingo: Cerrado</p>
+                    </div>    
+                </div>
+                <div class="links_redes">
+                    <a href="https://www.facebook.com/share/18m6ipR7Mh/?mibextid=wwXIfr" target="blank">
+                        <img class="redes_icon" src="{{url_for('static', filename='/images/fb_icon.png')}}" loading="lazy" alt="icon" title="Facebook">
+                    </a>
+                    <a href="https://wa.me/573188540936" target="blank">
+                        <img class="redes_icon" src="{{url_for('static', filename='/images/wpp_icon.png')}}" loading="lazy" alt="icon" title="WhatsApp">
+                    </a>
+                </div>
+            </div>
+            <div class="mapa">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15956.657412598479!2d-77.63891106569488!3d1.037396990030011!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e29489cdb270395%3A0x748396bcd8fd716e!2sSapuyes%2C%20Nari%C3%B1o!5e0!3m2!1ses-419!2sco!4v1772120990445!5m2!1ses-419!2sco" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <img src="{{url_for('static', filename='/images/logo_quinazaur.png')}}" loading="lazy" alt="logo">
+        <p>© 2025 Quinazaur. Todos los derechos reservados.</p>
+        <p>Diseño y desarrollo: RosaMaría Muñoz, Damarys Revelo, María José Guerrero, Erika pinchao, Sebastián Benavides, Arbey Cadena, Camilo Cabrera</p>
+        <p>Contáctanos: 3147799126</p>
+        <p></p>
+    </footer>
+</body>
+</html>

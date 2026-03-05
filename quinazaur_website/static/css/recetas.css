@@ -1,0 +1,503 @@
+
+/* ===Estilos Etiquetas Principales=== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html{
+    font-size: 20px;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    background: #FAF9F6;
+    font-family: "Nunito";
+}
+
+main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 80px;
+}
+
+footer{
+    background:#F8F9Fd;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: "Plus Jakarta Sans";
+    font-size: 0.7rem;
+    font-weight: 400;
+    color:#64748B;
+    padding: 50px 40px;
+    line-height: 1.5rem;
+}
+footer img{
+    width: 100px;
+    margin: 0px;
+    padding: 0px;
+}
+
+
+
+
+/* ===ESTILOS PARA CLASES=== */
+.navbar{
+    background-color: #fff;
+    display: flex;
+    padding: clamp(10px,5vh,30px) clamp(10px,5vw,40px);
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid rgb(0, 0, 0, 0.07);
+    height: clamp(30px,10vh,70px);
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    height: clamp(30px,10vh,70px);
+    padding: 0px;
+}
+.logo img{
+    height: 100%;
+}
+.logo h1{
+    font-size: 1.5rem;
+    font-family: "Nunito";
+    font-weight: 700;
+}
+
+.links{
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: right;
+}
+
+.section{
+    text-decoration:none;
+    text-align: center;
+    color: #596C7E;
+    font-family: "Plus Jakarta Sans";
+    font-size: clamp(0.5rem,4vw,0.9rem);
+    transition: transform 0.25s ease;
+}
+.section:hover{
+    color: #000;
+    transform: scale(1.05);
+}
+.section:active{
+    transform: scale(0.9);
+}
+
+.section img:hover{
+    transform: scale(1.05);
+    filter:brightness(0)
+}
+
+.btn_inicio{
+    text-decoration:none;
+    text-align: center;
+    color: #fff;
+    font-family: "Plus Jakarta Sans";
+    background-color: #000;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: clamp(0.5rem,4vw,0.9rem);
+    transition: transform 0.25s ease;
+}
+.btn_inicio:hover{
+    transform: scale(1.05);
+}
+.btn_inicio:active{
+    transform: scale(0.8);
+}
+
+.encabezado{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    padding: 50px clamp(20px, 10vw, 70px);
+    justify-content: center;
+    align-items: center;
+}
+.img1{
+    width: 270px;
+    border-radius: 15px;
+    box-shadow: 2px 7px 10px 5px rgb(0, 0, 0, 0.1);
+}
+
+.texto{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: auto;
+    text-align: center;
+    font-family: "Nunito";
+}
+.texto h2{
+    font-size: 2.5rem;
+    color: #078345;
+    font-weight: 700;
+    line-height:3.2rem;
+}
+.texto p{
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+.search-bar{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.buscar{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 0px;
+}
+.buscar input{
+    width: 70%;
+    border-radius: 10px 0 0 10px;
+    border: solid 1px #000;
+    border-right: none;
+    background-color: transparent;
+    text-align: left;
+    padding: 10px;
+}
+.btn-buscar{
+    display: flex;
+    width: 25px;
+    border: 0;
+    background-color: transparent;
+    border: 1px solid #000;
+    border-left: none;
+    border-radius: 0 10px 10px 0;
+    align-items: center;
+    justify-content: center;
+}
+.buscar-icon{
+    width: 95%;
+    background-color: transparent;
+}
+
+.recetas{
+    width: 100%;
+    padding: 50px clamp(20px, 10vw, 70px);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.txt-1{
+    font-family: "Nunito";
+    font-weight: 500;
+    font-size: 1.5rem;
+    text-align: center;
+    color: #078345;
+
+}
+
+.container-recetas{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.card-receta{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    padding: 50px 20px;
+    border: 1px solid #DAD7CD ;
+    border-radius: 15px;
+}
+
+.card-text{
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
+.text-header{
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+.text-header h2{
+    font-family: "Playfair Display";
+    font-size: 1.8rem;
+}
+.text-header p{
+    font-family: "Nunito";
+    font-size: 0.9rem;
+    color: #000b;
+}
+
+.ingredientes h3, .preparacion h3{
+    font-family: "Nunito";
+    font-size: 0.9rem;
+}
+.ingredientes, .preparacion{
+    font-family: "Nunito";
+    font-size: 0.9rem;
+}
+
+.img-receta{
+    width: clamp(200px, 20vw, 500px);
+    border-radius: 5px;
+    box-shadow: 2px 2px 10px 2px rgb(0, 0, 0, 0.1);
+}
+.contacto{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    width: 80%;
+    margin: auto;
+    padding: clamp(30px,40px,50px);
+    background: #fff;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px 16px 0px 0px;
+}
+
+.card_contacto{
+    display: flex;
+    flex-direction: column;
+    gap: 25px; 
+}
+
+.header_contacto h2{
+    font-family:"Playfair Display";
+    font-size: 2rem;
+    font-weight: 900;
+    padding-bottom: 5px;
+    
+}
+.header_contacto p{
+    font-family: "Nunito";
+    font-weight: 400;
+    font-size: 0.9rem;
+    color:#475569;  
+}
+
+.horarios{
+    display: flex;
+    justify-content: start;
+    align-items:center;
+    gap: 7px;
+}
+.horarios span{
+    font-weight: 900;
+}
+.horarios img{
+    height: 16px;
+}
+.horarios p{
+    color: #475569;
+    font-size: 0.9rem;
+}
+
+.mapa{
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px 16px 0px 0px;
+    border-bottom: 2px solid  #475569;
+    overflow: hidden;
+}
+.mapa iframe{
+    width: clamp(200px,450px,600px);
+    height: clamp(100px,337px,450px);
+}
+
+.links_redes{
+    display: flex;
+    gap: 15px;
+    text-decoration: none;
+    padding: 0px 10px;
+    align-items: center;
+    justify-content: left;
+}
+
+.redes_icon{
+    width: 25px;
+}
+
+.modal-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(0, 0, 0, 0.7);
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    
+}
+    
+.modal-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: clamp(320px,65vw,520px);
+    background-color: #FAF9F6;
+    border-radius: 15px;
+    padding: 30px 50px;
+    color: #6B4F2A;
+    text-align: left;
+    border: 1px solid #DAD7CD;
+    box-shadow: 5px 5px 10px 1px rgb(0, 0, 0, 0.1);
+    
+}  
+
+.modal-header{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+.modal-header p{
+    font-family: "Poppins";
+    font-weight: 600;
+    font-size: 1rem;
+    color:#4E944F;
+}
+
+.btn-cerrar{
+    border: 0;
+    background-color: transparent;
+    font-size: 1.5rem;
+    color:#6A1B9A;
+    transition: transform 0.25s ease;
+}
+.btn-cerrar:hover{
+    transform: scale(1.1);
+    color: #461466;
+}
+
+.producto-img{
+    width: 75%;
+    max-height: 40vh;
+    border-radius: 5px;
+}
+
+.descripcion-modal{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items:start;
+}
+.descripcion-modal h2{
+    font-family: "Nunito";
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 3px 10px;
+    color: #fff;
+    background-color: #4E944F;
+    border-radius: 25px;
+    margin-bottom: 7px;
+
+}
+.descripcion-modal p{
+    font-family: "Nunito";
+    font-weight: 400;
+    font-size: 0.8rem;
+    padding: 2px 5px;
+    color: #6B4F2A;
+}
+.atributos{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items:flex-start;
+    justify-content: left;
+    padding: 0px 5px;
+}
+.atributos h2{
+    font-family: "Poppins";
+    font-weight: 400;
+    font-size: 0.9rem;
+}
+
+.tags-cont{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.tags-cont h3{
+    font-family: "Nunito";
+    color: #4E944F;
+    font-size: 0.7rem;
+    font-weight: 400;
+    border: 1px solid #4E944F;
+    border-radius: 10px;
+    padding: 2px 10px;
+    background-color: #4E944F21;
+}
+
+.footer-modal{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: center;
+    padding: 0px 10px;
+}
+
+.modal-precio{
+    color: #4E944F;
+    font-size: 1.2rem;
+    font-weight: 400;
+    text-align: left;
+}
+.modal-precio span{
+    color: #6B4F2A;
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+.btn_comprar{
+    font-size: 1rem;
+    background-color: #6A1B9A;
+    border: 0;
+    font-family: "Poppins";
+    color: #fff;
+    text-align: center;
+    justify-content: center;
+    padding: 5px 10px;
+    white-space: nowrap;
+    border-radius: 25px;
+}
+.btn_comprar:hover{
+    background-color: #461466;
+    transform: scale(1.01);
+}
+.btn_comprar:active{
+    transform: scale(0.9);
+}
