@@ -94,7 +94,7 @@ footer img{
     color: #596C7E;
     font-family: "Plus Jakarta Sans";
     font-size: clamp(0.5rem,4vw,0.9rem);
-    transition: transform 0.25s ease;
+    transition: transform 0.25s ease-in-out;
 }
 .section:hover{
     color: #000;
@@ -118,7 +118,7 @@ footer img{
     border-radius: 10px;
     padding: 10px 20px;
     font-size: clamp(0.5rem,4vw,0.9rem);
-    transition: transform 0.25s ease;
+    transition: transform 0.25s ease-in-out;
 }
 .btn_inicio:hover{
     transform: scale(1.05);

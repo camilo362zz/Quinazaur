@@ -94,7 +94,7 @@ footer img{
     color: #596C7E;
     font-family: "Plus Jakarta Sans";
     font-size: clamp(0.5rem,4vw,0.9rem);
-    transition: transform 0.25s ease;
+    transition: transform 0.25s ease-in-out;
 }
 .section:hover{
     color: #000;
@@ -118,7 +118,7 @@ footer img{
     border-radius: 10px;
     padding: 10px 20px;
     font-size: clamp(0.5rem,4vw,0.9rem);
-    transition: transform 0.25s ease;
+    transition: transform 0.25s ease-in-out;
 }
 .btn_inicio:hover{
     transform: scale(1.05);
@@ -148,7 +148,8 @@ footer img{
     gap: 15px;
     width: auto;
     text-align: center;
-    font-family: "Nunito";
+    font-family: "Poppins";
+    font-weight: 100;
 }
 .texto h2{
     font-size: 2.5rem;
@@ -175,7 +176,7 @@ footer img{
     gap: 0px;
 }
 .buscar input{
-    width: 70%;
+    width: 60%;
     border-radius: 10px 0 0 10px;
     border: solid 1px #000;
     border-right: none;
@@ -185,18 +186,30 @@ footer img{
 }
 .btn-buscar{
     display: flex;
-    width: 25px;
+    width: 40px;
     border: 0;
+    padding: 0 3px;
     background-color: transparent;
     border: 1px solid #000;
     border-left: none;
     border-radius: 0 10px 10px 0;
     align-items: center;
     justify-content: center;
+    transition: all 0.25s ease-in-out;
 }
+.btn-buscar:hover{
+    background-color: #0002;
+}
+
 .buscar-icon{
-    width: 95%;
+    width: 85%;
     background-color: transparent;
+    margin: 0 10px;
+
+    transition: all 0.25s ease-in-out;
+}
+.buscar-icon:hover{
+    transform: rotate(10deg);
 }
 
 .recetas{
@@ -207,12 +220,40 @@ footer img{
     gap: 30px;
 }
 .txt-1{
-    font-family: "Nunito";
+    font-family: "Poppins";
     font-weight: 500;
     font-size: 1.5rem;
     text-align: center;
-    color: #078345;
+    color: #6B4F2A;
 
+}
+
+.no_result{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+.no_result a{
+    color: #078345;
+    text-decoration: none;
+}
+.no_result a:hover{
+    color: #000;
+}
+
+.msg_noresult{
+    font-family: "Nunito";
+    font-weight: 500;
+    font-size: 1rem;
+    text-align: center;
+    color: #000a;
+}
+
+.img_noresult{
+    width: 140px;
 }
 
 .container-recetas{

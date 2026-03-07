@@ -74,3 +74,11 @@ class bd_postgres:
         query="SELECT r.id_receta, r.nombre_receta, r.descripcion_receta, imagen_receta,(SELECT json_agg(json_build_object('ingrediente', i.nombre_ingrediente,'cantidad', ir.cantidad)) FROM recetas.ingrediente_receta ir JOIN recetas.ingredientes i  ON i.id_ingrediente = ir.id_ingrediente WHERE ir.id_receta = r.id_receta) AS ingredientes, (SELECT json_agg(p.descripcion ORDER BY p.orden asc) FROM recetas.pasos p WHERE p.id_receta = r.id_receta) AS pasos FROM recetas.recetas r order by r.nombre_receta"
         result=self.execute_query(query, fetch=True)
         return result 
+    
+    def buscar_receta(self,q):
+        print(f"search: {q}")
+        key=f"{q}"
+        key=key.strip("+")
+        query="SELECT r.id_receta, r.nombre_receta, r.descripcion_receta, imagen_receta,(SELECT json_agg(json_build_object('ingrediente', i.nombre_ingrediente,'cantidad', ir.cantidad)) FROM recetas.ingrediente_receta ir JOIN recetas.ingredientes i  ON i.id_ingrediente = ir.id_ingrediente WHERE ir.id_receta = r.id_receta) AS ingredientes, (SELECT json_agg(p.descripcion ORDER BY p.orden asc) FROM recetas.pasos p WHERE p.id_receta = r.id_receta) AS pasos FROM recetas.recetas r WHERE r.id_receta in (select distinct r.id_receta from recetas.recetas r join recetas.ingrediente_receta ir on r.id_receta =ir.id_receta join recetas.ingredientes i on i.id_ingrediente =ir.id_ingrediente where to_tsvector('spanish',r.nombre_receta) @@plainto_tsquery('spanish',%s) or to_tsvector('spanish',i.nombre_ingrediente) @@plainto_tsquery('spanish',%s) or to_tsvector('spanish',r.descripcion_receta) @@plainto_tsquery('spanish',%s))"
+        result=self.execute_query(query,(q,q,q),fetch=True)
+        return result

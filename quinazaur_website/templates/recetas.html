@@ -35,15 +35,22 @@
             </div>
         </section>    
         <section class="search-bar">  
-            <form class="buscar">
-                <input type="text" placeholder="Busca tus recetas aquí">
-                <button class="btn-buscar" type="submit">
-                    <img class="buscar-icon" src="{{url_for('static', filename='/images/lupa.png')}}">
+            <form class="buscar" action="{{url_for('recetas')}}" method="get">
+                <input type="text" placeholder="Busca tus recetas aquí" name="search">
+                <button class="btn-buscar" type="submit" title="Buscar">
+                    <img class="buscar-icon" src="{{url_for('static', filename='/images/lupa.png')}}" alt="icon">
                 </button>
             </form>
         </section>
         <section class="recetas">
-            <p class="txt-1">Hecha un vistazo a nuestras recetas</p>
+            {% if not recetas %}
+                <div class="no_result">
+                    <img src="{{url_for('static',filename='images/no_result.png')}}" class="img_noresult">
+                    <p class="msg_noresult" >Lo sentimos, no hemos encontrado ninguna receta. <a href="{{url_for('recetas')}}">Volver</a></p>
+                </div>    
+            {% else %}
+                <p class="txt-1">Hecha un vistazo a nuestras recetas</p>
+            {% endif %}    
             <div class="container-recetas">
                 {% for receta in recetas %}
                     <div class="card-receta">
