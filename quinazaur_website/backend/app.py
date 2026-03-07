@@ -37,4 +37,4 @@ def recetas():
     return render_template("recetas.html",recetas=recetas)
 
 if __name__=="__main__":
-    app.run(debug=True)
+    app.run()
