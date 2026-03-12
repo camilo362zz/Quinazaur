@@ -36,5 +36,42 @@ def recetas():
         db.disconnect()
     return render_template("recetas.html",recetas=recetas)
 
+@app.route("/compromiso-verde")
+def compromiso_verde():
+    buscar=request.args.get("buscar")
+    section=request.args.get("section")
+
+    if not section:
+        section="presentacion" 
+        return render_template("compromiso_verde.html",section=section)
+    
+    if section=="noticias":
+        if not buscar:
+            db=bd_postgres(h,p,d,u,pw)
+            noticias=db.get_noticias()
+            db.disconnect()
+            return render_template("compromiso_verde.html",section=section, noticias=noticias)
+        else:
+            db=bd_postgres(h,p,d,u,pw)
+            noticias=db.buscar_noticia(buscar)
+            db.disconnect()
+            return render_template("compromiso_verde.html",section=section, noticias=noticias)
+        
+    if section=="presentacion":
+        if not buscar:
+            return render_template("compromiso_verde.html",section=section)
+        else:
+            db=bd_postgres(h,p,d,u,pw)
+            print(f"Busando Noticia {buscar}")
+            db.disconnect()
+            return render_template("compromiso_verde.html",section=section)      
+    
+    if section=="galeria":
+        db=bd_postgres(h,p,d,u,pw)
+        imgs=db.get_galeria()
+        db.disconnect()
+        return render_template("compromiso_verde.html",section=section, img=imgs) 
+
+
 if __name__=="__main__":
-    app.run()
+    app.run(debug=True)

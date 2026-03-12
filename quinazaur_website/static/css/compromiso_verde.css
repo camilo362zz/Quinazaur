@@ -1,0 +1,770 @@
+
+/* ===Estilos Etiquetas Principales=== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html{
+    font-size: 20px;
+}
+@media (max-width:400px) {
+    html{
+    font-size: 16px;
+}
+}
+body{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    background:linear-gradient(#F0FDF4,#FFFFFF,#FAF5FF);
+    font-family: "Nunito";
+}
+
+main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 80px;
+}
+
+footer{
+    background:#F8F9Fd;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: "Plus Jakarta Sans";
+    font-size: 0.7rem;
+    font-weight: 400;
+    color:#64748B;
+    padding: 50px 40px;
+    line-height: 1.5rem;
+}
+footer img{
+    width: 100px;
+    margin: 0px;
+    padding: 0px;
+}
+
+/*============ANIMACIONES==============*/
+@keyframes slide1{
+    from{
+        opacity: 0;
+        transform: translatey(50px);
+    }
+
+    to{
+        opacity: 1;
+        transform: translatey(0px);
+    }
+}
+
+@keyframes slide2{
+    from{
+        opacity: 0;
+        transform: translatey(-15px);
+    }
+
+    to{
+        opacity: 1;
+        transform: translatey(0px);
+    }
+}
+
+@keyframes fade{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+/*============ANIMACIONES==============*/
+
+
+/* ===ESTILOS PARA CLASES=== */
+.navbar{
+    position: relative;
+    z-index: 1;
+    background-color: #fff;
+    display: flex;
+    padding: clamp(10px,5vh,30px) clamp(10px,5vw,40px);
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid rgb(0, 0, 0, 0.07);
+    height: clamp(30px,10vh,70px);
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    height: clamp(30px,10vh,70px);
+    padding: 0px;
+}
+.logo img{
+    height: 100%;
+}
+.logo h1{
+    font-size: 1.4rem;
+    font-family: "Nunito";
+    font-weight: 700;
+}
+
+.links{
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: right;
+}
+
+.section{
+    text-decoration:none;
+    text-align: center;
+    color: #596C7E;
+    font-family: "Plus Jakarta Sans";
+    font-size: clamp(0.5rem,4vw,0.9rem);
+    transition: transform 0.25s ease-in-out;
+}
+.section:hover{
+    color: #000;
+    transform: scale(1.05);
+}
+.section:active{
+    transform: scale(0.9);
+}
+
+.section img:hover{
+    transform: scale(1.05);
+    filter:brightness(0)
+}
+
+.btn_inicio{
+    text-decoration:none;
+    text-align: center;
+    color: #fff;
+    font-family: "Plus Jakarta Sans";
+    background-color: #000;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: clamp(0.5rem,4vw,0.9rem);
+    transition: transform 0.25s ease-in-out;
+}
+.btn_inicio:hover{
+    transform: scale(1.05);
+}
+.btn_inicio:active{
+    transform: scale(0.8);
+}
+
+/*==============boton hamburguesa=======================*/
+@keyframes abrir {
+    from{
+        transform: translateX(100px);
+        opacity: 0;
+    }
+
+    to{
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+@keyframes cerrar {
+    from{
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to{
+        transform: translateX(100px);
+        opacity: 0;
+    }
+}
+.abrir-menu{
+    width: 35px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    background-color: transparent;
+    border: 0;
+    display: none;
+}
+
+.abrir-menu >span{
+    height: 4px;
+    width: 100%;
+    background-color: #000;
+    border-radius: 999px;   
+}
+
+.cerrar-menu{
+    width:1.5rem;
+    background-color: transparent;
+    border: 0;
+    text-align: right;
+    display: none;
+}
+.cerrar-menu >img{
+    width: 100%;
+}
+
+.active{
+    display: block;
+}
+
+@media (max-width:770px) {
+    .abrir-menu{
+        display: flex;
+    }
+    
+    .links{
+        animation: cerrar 0.2s ease;
+        display: none;
+    }
+
+    .btn_inicio{
+        margin-top: 5px;
+    }
+    
+}
+
+.links-movil{
+    display: flex;
+    animation: abrir 0.2s ease;
+    position: absolute;
+    right: 0;
+    top: 0;
+    flex-direction: column;
+    gap: 5px;
+    align-items:end;
+    justify-content: start;
+    width: 75vw;
+    height: 100vh;
+    background-color: #fff;
+    padding: 20px 5vw;
+    border: solid 1px black;
+    box-shadow: 0 0 0 100vw rgb(0,0,0,0.7);
+    transition: all 0.2s ease;
+    
+}
+
+.links-cerrar{
+    animation: cerrar 0.2s ease;
+}
+.section-movil{
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    width: 100%;
+    height: 8%;
+    color: #000;
+}    
+/*=======================================*/
+
+.navbar-2{
+    background-color: #fff;
+    display: flex;
+    gap: 25px;
+    padding: clamp(10px,5vh,30px) clamp(10px,5vw,40px);
+    width: 95%;
+    margin-top: 25px;
+    align-items: center;
+    justify-content: left;
+    border-bottom: 3px solid rgb(0, 0, 0, 0.07);
+    height: clamp(20px,7vh,60px);
+}
+
+.section-2{
+    text-decoration:none;
+    text-align: center;
+    color: #596C7E;
+    font-family: "Plus Jakarta Sans";
+    font-size: clamp(0.5rem,4vw,0.9rem);
+    transition: transform 0.25s ease-in-out;
+}
+.section-2:hover{
+    color: #000;
+    transform: scale(1.05);
+}
+.section-2:active{
+    transform: scale(0.9);
+}
+
+.activo{
+    height:auto;
+    text-decoration:none;
+    text-align: center;
+    color: #059669;
+    font-family: "Plus Jakarta Sans";
+    font-size: clamp(0.5rem,4vw,0.9rem);
+    padding: 10px 0px;
+    border-bottom: 2px solid #059669;
+    animation: slide2 0.25s ease-in-out;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+}
+
+/* ======== PRESENTACION ===============*/
+
+.presentacion{
+    width: 100%;
+    padding: clamp(10px,5vh,50px) clamp(10px,5vw,70px);
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    animation: slide1 0.25s ease-in-out;
+}
+.presentacion h2{
+    width: 100%;
+    font-family: "Poppins";
+    color: #03AD05;
+    font-size: 1.25rem;
+    font-weight: 400;
+    text-align: left;
+    margin-bottom: 5px;
+}
+.presentacion p{
+    text-align: left;
+    font-family: "Nunito";
+    color: #364153;
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+.img-gestion{
+    width: clamp(200px,80vw,850px);
+    border-radius: 15px;
+    box-shadow: 5px 5px 10px 5px rgb(0, 0, 0, 0.1);
+}
+.container-cards{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    gap: 30px;
+
+}
+
+.card-practicas{
+    background-color: #F0FDF4a1;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    gap: 10px;
+    border: 0.8px solid #B9F8CF;
+    border-radius: 10px;
+    transition: all 0.4s ease-in-out;
+}
+.card-practicas:hover{
+    transform: scale(1.07);
+    box-shadow: 4px 4px 10px 1px rgb(0, 0, 0, 0.1);
+}
+.card-practicas img{
+    width:2rem;
+}
+.card-practicas h3{
+    font-size: "Poppins";
+    font-weight: 400;
+    font-size: 1rem;
+    color: #1E2939;
+    text-align: center;
+}
+.card-practicas p{
+    font-size: "Nunito";
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: #4A5565;
+    text-align: center;
+}
+
+/* ======== PRESENTACION ===============*/
+
+/* ======== NOTICIAS ===============*/
+.noticias {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    padding: clamp(5px, 2vh, 25px) clamp(2px,2vw,70px);
+    animation: slide1 0.25s ease-in-out;
+
+}
+.header-noticias{
+    height: clamp(300px,70vh,490px);
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: start;
+    gap: 50px;
+    background:linear-gradient(#0009, #000b), url(../images/bosque1.jpg);
+    background-position: top;
+    background-size: cover;
+    padding: 0 clamp(5px,5%,50px);
+    padding-top: 70px;
+    padding-bottom: 20px;
+    border-radius: 15px;
+}
+.header-noticias h2{
+    font-family: "Playfair Display";
+    font-weight: 700;
+    font-size: 2.5rem;
+    color: #fff;
+    word-wrap:break-word;
+}
+.header-noticias p{
+    font-family: "Poppins";
+    font-weight: 300;
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+.search-bar{
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.search-bar input{
+    width: 50%;
+    padding: 5px 15px;
+    font-family: "Poppins";
+    font-size: 0.7rem;
+    color: #5A5A5A;
+    background-color: #fff;
+    border-radius: 50px;
+    border: none;
+}    
+
+.btn-buscar{
+    background-color: #2E7D32;
+    padding: 10px 20px;
+    color: #fff;
+    font-family: "Poppins";
+    font-size: 0.7rem;
+    font-weight: 700;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+}
+.btn-buscar:hover{
+    background-color: #225c24 ;
+}
+.container-noticias{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+.card-noticia{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px clamp(2px,2vw,25px);
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 4px 4px 10px 1px rgb(0, 0, 0, 0.1);
+} 
+
+.img-noticia{
+    width: 300px;
+    border-radius: 15px;
+    box-shadow: 4px 4px 10px 1px rgb(0, 0, 0, 0.1);
+
+}
+.text-noticia{
+    flex:1 1 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: start;
+}
+.text-noticia h3{
+    width: 100%;
+    justify-content: left;
+    font-family: "Payfair Display";
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.descripcion-corta-noticia{
+    width: 100%;
+    justify-content: left;
+    font-family: "Nunito";
+    font-size: 0.95rem;
+    color: #000a;
+}
+
+.descripcion-completa-noticia{
+    width: 100%;
+    justify-content: left;
+    font-family: "Nunito";
+    font-size: 0.95rem;
+    color: #000a;
+}
+.fecha-noticia{
+    width: 100%;
+    justify-content: left;
+    font-family: "Poppins";
+    font-size: 0.8rem;
+    font-weight: 500;
+    color:#8D6E63
+}
+
+.btn-ver-mas-noticia{
+    font-family: "Poppins";
+    font-size: 0.8rem;
+    font-weight: 700;
+    color:#2E7D32;
+    padding: 10px 15px;
+    border-radius: 50px;
+    border: none;
+    background-color: #2e7d3223;
+    width: fit-content;
+    cursor: pointer;
+}
+details{
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.no_result{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+.no_result a{
+    color: #078345;
+    text-decoration: none;
+}
+.no_result a:hover{
+    color: #000;
+}
+
+.msg_noresult{
+    font-family: "Nunito";
+    font-weight: 500;
+    font-size: 1rem;
+    text-align: center;
+    color: #000a;
+}
+
+.img_noresult{
+    width: 140px;
+}
+
+
+
+/* ======== GALERÍA ===============*/
+
+.galeria{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    padding: 40px clamp(2px,2vw,20px);
+    gap: 50px;
+    animation: slide1 0.25s ease-in-out;
+}
+
+.header-galeria{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+
+}
+.header-galeria h2{
+    font-family: "Playfair Display";
+    font-weight: 900;
+    font-size: 2.5rem;
+    color: #4E944F;
+    text-align: center;
+}
+.header-galeria p{
+    font-family: "Nunito";
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: #4B5563;
+    text-align: center;
+}
+
+.container-fotos{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1Fr));
+    gap: 7px;
+    align-items: stretch;
+}
+@media (max-width:400px) {
+    .container-fotos{
+        grid-template-columns: repeat(auto-fit,minmax(150px,1Fr));
+    }
+    
+}   
+
+.item{
+    position: relative;
+    object-fit:cover;
+    object-position: center;
+    width: 100%;
+}
+.item-img{
+    width: 100%;
+    height: 100%;
+    object-fit:cover;
+    object-position: center;
+    border-radius: 15px;
+}
+.item-titulo{
+    width: 100%;
+    display: flex;
+    align-items:end;
+    justify-content: center;
+    position:absolute;
+    bottom:0;
+    font-family: "Poppins";
+    color: #fff;
+    font-size: 0.8rem;
+    background: linear-gradient(transparent,rgb(1,1,1,0.5),rgb(1,1,1,0.7));
+    height: 100%;
+    opacity: 0; 
+    padding-bottom: 5px;
+    text-align: center;
+    border-radius: 15px;
+}
+.item:hover .item-titulo{
+    display: flex;
+    animation: fade 0.25s ease-in-out;
+    opacity: 1;
+}
+
+
+@media (min-width:1000px) {
+    
+    .item:nth-child(1){
+        grid-column-start: span 3;
+}
+    .item:nth-child(5){
+        grid-row-start: span 2;
+        grid-column-start: span 2
+}
+    .item:nth-child(9){
+        grid-column-start: span 2
+}
+.item:nth-child(12){
+        grid-column-start: span 2
+}
+    
+.container-fotos{
+    grid-auto-rows: minmax(100px, 320px);
+}
+}
+
+
+
+
+.contacto{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    width: 80%;
+    margin: auto;
+    padding: clamp(30px,40px,50px);
+    background: #fff;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px 16px 0px 0px;
+}
+
+.card_contacto{
+    display: flex;
+    flex-direction: column;
+    gap: 25px; 
+}
+
+.header_contacto h2{
+    font-family:"Playfair Display";
+    font-size: 2rem;
+    font-weight: 900;
+    padding-bottom: 5px;
+    
+}
+.header_contacto p{
+    font-family: "Nunito";
+    font-weight: 400;
+    font-size: 0.9rem;
+    color:#475569;  
+}
+
+.horarios{
+    display: flex;
+    justify-content: start;
+    align-items:center;
+    gap: 7px;
+}
+.horarios span{
+    font-weight: 900;
+}
+.horarios img{
+    height: 16px;
+}
+.horarios p{
+    color: #475569;
+    font-size: 0.9rem;
+}
+
+.mapa{
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px 16px 0px 0px;
+    border-bottom: 2px solid  #475569;
+    overflow: hidden;
+}
+.mapa iframe{
+    width: clamp(200px,450px,600px);
+    height: clamp(100px,337px,450px);
+}
+
+.links_redes{
+    display: flex;
+    gap: 15px;
+    text-decoration: none;
+    padding: 0px 10px;
+    align-items: center;
+    justify-content: left;
+}
+
+.redes_icon{
+    width: 25px;
+}
+

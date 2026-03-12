@@ -82,3 +82,19 @@ class bd_postgres:
         query="SELECT r.id_receta, r.nombre_receta, r.descripcion_receta, imagen_receta,(SELECT json_agg(json_build_object('ingrediente', i.nombre_ingrediente,'cantidad', ir.cantidad)) FROM recetas.ingrediente_receta ir JOIN recetas.ingredientes i  ON i.id_ingrediente = ir.id_ingrediente WHERE ir.id_receta = r.id_receta) AS ingredientes, (SELECT json_agg(p.descripcion ORDER BY p.orden asc) FROM recetas.pasos p WHERE p.id_receta = r.id_receta) AS pasos FROM recetas.recetas r WHERE r.id_receta in (select distinct r.id_receta from recetas.recetas r join recetas.ingrediente_receta ir on r.id_receta =ir.id_receta join recetas.ingredientes i on i.id_ingrediente =ir.id_ingrediente where to_tsvector('spanish',r.nombre_receta) @@plainto_tsquery('spanish',%s) or to_tsvector('spanish',i.nombre_ingrediente) @@plainto_tsquery('spanish',%s) or to_tsvector('spanish',r.descripcion_receta) @@plainto_tsquery('spanish',%s))"
         result=self.execute_query(query,(q,q,q),fetch=True)
         return result
+    
+    def get_noticias(self):
+        query="select n.titulo_noticia, n.descripcion_corta, n.descripcion_completa, n.fecha_publicacion, n.imagen_noticia from informacion.noticia n order by n.fecha_publicacion desc"
+        result=self.execute_query(query, fetch=True)
+        return result
+    
+    def buscar_noticia(self,buscar):
+        b=f"%{buscar}%"
+        query="select n.titulo_noticia, n.descripcion_corta, n.descripcion_completa, n.fecha_publicacion, n.imagen_noticia from informacion.noticia n where to_tsvector('spanish',n.titulo_noticia ) @@plainto_tsquery('spanish',%s) or to_tsvector('spanish', n.descripcion_completa) @@plainto_tsquery('spanish',%s) or n.fecha_publicacion::text ilike %s order by n.fecha_publicacion desc"
+        result=self.execute_query(query, (buscar,buscar,b), fetch=True)
+        return result
+    
+    def get_galeria(self):
+        query="select i.titulo_imagen, i.ruta  from informacion.imagen i order by random()"
+        result=self.execute_query(query, fetch=True)
+        return result

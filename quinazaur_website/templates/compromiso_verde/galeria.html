@@ -1,0 +1,14 @@
+<section class="galeria">
+    <div class="header-galeria">
+        <h2>Galería de Imágenes</h2>
+        <p>Hecha un vistaso a nuestras fotos</p>
+    </div>    
+    <div class="container-fotos">
+        {% for img in img%}
+            <figure class="item">
+                <img class="item-img" src="{{url_for('static', filename=img.ruta)}}">
+                <figcaption class="item-titulo">{{img.titulo_imagen}}</figcaption>
+            </figure>
+        {% endfor %}    
+    </div>
+</section>

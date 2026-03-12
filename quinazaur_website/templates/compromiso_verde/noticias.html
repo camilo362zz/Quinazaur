@@ -1,0 +1,36 @@
+<section class="noticias">
+    <div class="header-noticias">
+        <span>
+        <h2>Compromiso Ambiental de Quinazaur</h2>
+        <p>Descubre cómo estamos sembrando un futuro sostenible a través de nuestros proyectos e iniciativas.</p>
+        </span>
+        <form class="search-bar" method="get">
+            <input type="hidden" name="section" value="noticias">
+            <input name="buscar" type="text"  placeholder="Buscar proyectos o iniciativas...">
+            <button class="btn-buscar" type="submit">Buscar</button>
+        </form>
+    </div>
+    <div class="container-noticias">
+        {% set meses=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'] %}
+        {% if not noticias%}
+            <div class="no_result">
+                <img src="{{url_for('static',filename='images/no_result.png')}}" class="img_noresult" loading="lazy" alt="icon">
+                <p class="msg_noresult" >Lo sentimos, no hemos encontrado ninguna noticia. <a href="/compromiso-verde?section=noticias">Volver</a></p>
+            </div> 
+        {% endif %}    
+        {% for noticia in noticias%}
+            <div class="card-noticia">
+                <img class="img-noticia" src="{{url_for('static',filename=noticia.imagen_noticia)}}">
+                <div class="text-noticia">
+                    <p class="fecha-noticia">Publicado: {{noticia.fecha_publicacion.day}} {{meses[noticia.fecha_publicacion.month-1]}} {{noticia.fecha_publicacion.year}} </p>
+                    <h3>{{noticia.titulo_noticia}}</h3>
+                    <p class="descripcion-corta-noticia">{{noticia.descripcion_corta}}</p>                                
+                    <details>
+                        <summary class="btn-ver-mas-noticia">Leer más</summary>
+                        <p class="descripcion-completa-noticia">{{noticia.descripcion_completa}}</p>
+                    </details>
+                </div>
+            </div>
+        {% endfor %}    
+    </div>
+</section>

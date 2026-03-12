@@ -23,13 +23,19 @@
             <img src="{{ url_for('static',filename='images/logo_quinazaur.png')}}" loading="lazy" alt="Logo" title="Inicio">
         </div>
         <nav class="links">
+            <button class="cerrar-menu"><img src="{{url_for('static',filename='images/cerrar_menu.png')}}" loading="lazy" alt="icon"></button>
             <a class="section" href="{{url_for('productos')}}">Productos</a>
             <a class="section" href="{{url_for('recetas')}}">Recetario Saludable</a>
-            <a class="section" href="">Compromiso Verde</a>
+            <a class="section" href="{{url_for('compromiso_verde')}}">Compromiso Verde</a>
             <a class="section" href="" title="Iniciar Sesion">
                 <img src="{{ url_for('static',filename='images/user_icon.png')}}" loading="lazy" alt="icon">
             </a>
         </nav>
+        <button class="abrir-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </header>
     <main>
         <section class="banner">
@@ -75,7 +81,7 @@
                     <p>Respetar y valorar el trabajo al campesino nariñense, sus semillas y el ambiente.</p>
                 </div>
                 <div class="card_valores">
-                    <img src="{{ url_for('static',filename='images/familia1.png')}}" loading="lazy" alt="icon">
+                    <img src="{{ url_for('static',filename='images/familia.png')}}" loading="lazy" alt="icon">
                     <h3>Familia</h3>
                     <p>Somos un equipo que trabaja con amor y lealtad a la empresa y nuestra región.</p>
                 </div>
@@ -171,4 +177,5 @@
         <p></p>
     </footer>
 </body>
+<script src="{{url_for('static',filename='/js/script.js')}}"></script>
 </html>
