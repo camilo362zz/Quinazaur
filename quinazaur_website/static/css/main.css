@@ -8,11 +8,7 @@
 html{
     font-size: 20px;
 }
-@media (max-width:400px) {
-    html{
-    font-size: 16px;
-}
-}
+
 body{
     width: 100%;
     padding: 0;
@@ -20,6 +16,7 @@ body{
     box-sizing: border-box;
     background: #F8F9FA;
     font-family: "Nunito";
+    overflow-x: hidden;
 }
 
 main{
@@ -28,6 +25,11 @@ main{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+@media (max-width:450px) {
+    html{
+    font-size: 18px;
+}
 }
 
 footer{
@@ -46,9 +48,7 @@ footer{
     line-height: 1.5rem;
 }
 footer img{
-    width: 100px;
-    margin: 0px;
-    padding: 0px;
+    width: 5rem;
 }
 
 
@@ -100,8 +100,7 @@ footer img{
 }
 
 .logo{
-    height: clamp(30px,10vh,70px);
-    padding: 0px;
+    height: clamp(1rem,10vh,3.5rem);
 }
 .logo img{
     height: 100%;
@@ -210,6 +209,14 @@ footer img{
     }
     
 }
+@media (max-width:400px) {
+    html{
+    font-size: 16px;
+    }
+    .contacto{
+    width: 100%;
+    }
+}
 
 .links-movil{
     display: flex;
@@ -253,6 +260,7 @@ footer img{
     background-position: top;
     animation: banner_animado 150s infinite;     
 }
+
 .banner h1, .banner h2{
     color: #fff;
     margin: 2px;
@@ -272,7 +280,8 @@ footer img{
 .descripcion{
     display: flex;
     flex-direction: column;
-    padding: 50px 15vw;
+    padding: 50px clamp(40px,15vw, 250px);
+    
     text-align: center;
     margin: 0;
     font-size: clamp(0.5rem,4vw,1rem)
@@ -285,6 +294,11 @@ footer img{
     align-items: stretch;
     gap: 50px;
     padding: 50px 20vw;
+}
+@media (max-width: 500px) {
+    .info_institucional{
+        padding: 50px 10vw;
+    }
 }
 
 .card{
@@ -445,10 +459,15 @@ footer img{
     gap: 40px;
     width: 80%;
     margin: auto;
-    padding: clamp(30px,40px,50px);
+    padding: clamp(10px,5vw,50px);
     background: #fff;
     border: 1px solid #E2E8F0;
     border-radius: 16px 16px 0px 0px;
+}
+@media (max-width:400px) {
+    .contacto{
+    width: 85%;
+    }
 }
 
 .card_contacto{
@@ -496,9 +515,16 @@ footer img{
     overflow: hidden;
 }
 .mapa iframe{
-    width: clamp(200px,450px,600px);
-    height: clamp(100px,337px,450px);
+    width: 450px;
+    height: 337px;
 }
+@media (max-width:400px) {
+    .mapa iframe{
+    width: 350px;
+    height:200px;
+    }
+}
+
 
 .links_redes{
     display: flex;

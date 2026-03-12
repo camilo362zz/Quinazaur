@@ -8,9 +8,9 @@
 html{
     font-size: 20px;
 }
-@media (max-width:400px) {
+@media (max-width:450px) {
     html{
-    font-size: 16px;
+    font-size: 18px;
 }
 }
 body{
@@ -22,6 +22,7 @@ body{
     box-sizing: border-box;
     background: #FAF9F6;
     font-family: "Nunito";
+    overflow-x: hidden;
 }
 
 main{
@@ -49,9 +50,7 @@ footer{
     line-height: 1.5rem;
 }
 footer img{
-    width: 100px;
-    margin: 0px;
-    padding: 0px;
+    width: 5rem;
 }
 
 
@@ -73,9 +72,9 @@ footer img{
     display: flex;
     align-items: center;
     gap: 15px;
-    height: clamp(30px,10vh,70px);
-    padding: 0px;
+    height: clamp(1rem,10vh,3.5rem);
 }
+
 .logo img{
     height: 100%;
 }
@@ -258,7 +257,7 @@ footer img{
     padding-left: clamp(10px, 10vw, 50px);
 }
 .productos_header img{
-    width: 16px;
+    width: 1rem;
 }
 
 .container_productos{
@@ -268,7 +267,7 @@ footer img{
     align-items: stretch;
     justify-content: center;
     gap: 50px;
-    padding: clamp(10px 5vh 50px) clamp(10px 10vw 50px);
+    padding: clamp(10px 5vh 50px) clamp(20px 10vw 50px);
 }
 
 .card_productos{
@@ -277,7 +276,7 @@ footer img{
     align-items: center;
     justify-content: space-between;
     gap: 25px;
-    width: clamp(200px,30vw,350px);
+    width: clamp(300px,75vw,350px);
     background-color: #fff;
     border-radius: 15px;
     padding: 20px 20px;
@@ -370,10 +369,15 @@ footer img{
     gap: 40px;
     width: 80%;
     margin: auto;
-    padding: clamp(30px,40px,50px);
+    padding: clamp(10px,5vw,50px);
     background: #fff;
     border: 1px solid #E2E8F0;
     border-radius: 16px 16px 0px 0px;
+}
+@media (max-width:400px) {
+    .contacto{
+    width: 85%;
+    }
 }
 
 .card_contacto{
@@ -421,8 +425,14 @@ footer img{
     overflow: hidden;
 }
 .mapa iframe{
-    width: clamp(200px,450px,600px);
-    height: clamp(100px,337px,450px);
+    width: 450px;
+    height: 337px;
+}
+@media (max-width:400px) {
+    .mapa iframe{
+    width: 350px;
+    height:200px;
+    }
 }
 
 .links_redes{

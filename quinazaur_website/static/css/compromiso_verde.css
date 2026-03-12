@@ -8,9 +8,9 @@
 html{
     font-size: 20px;
 }
-@media (max-width:400px) {
+@media (max-width:450px) {
     html{
-    font-size: 16px;
+    font-size: 18px;
 }
 }
 body{
@@ -22,6 +22,7 @@ body{
     box-sizing: border-box;
     background:linear-gradient(#F0FDF4,#FFFFFF,#FAF5FF);
     font-family: "Nunito";
+    overflow-x: hidden;
 }
 
 main{
@@ -49,9 +50,7 @@ footer{
     line-height: 1.5rem;
 }
 footer img{
-    width: 100px;
-    margin: 0px;
-    padding: 0px;
+    width: 5rem;
 }
 
 /*============ANIMACIONES==============*/
@@ -108,7 +107,7 @@ footer img{
     display: flex;
     align-items: center;
     gap: 15px;
-    height: clamp(30px,10vh,70px);
+    height: clamp(1rem,10vh,3.5rem);
     padding: 0px;
 }
 .logo img{
@@ -119,7 +118,11 @@ footer img{
     font-family: "Nunito";
     font-weight: 700;
 }
-
+@media (max-width:450px) {
+    .logo h1{
+    font-size: 1.15rem;
+    }
+}
 .links{
     display: flex;
     gap: 15px;
@@ -700,10 +703,15 @@ details{
     gap: 40px;
     width: 80%;
     margin: auto;
-    padding: clamp(30px,40px,50px);
+    padding: clamp(10px,5vw,50px);
     background: #fff;
     border: 1px solid #E2E8F0;
     border-radius: 16px 16px 0px 0px;
+}
+@media (max-width:400px) {
+    .contacto{
+    width: 85%;
+    }
 }
 
 .card_contacto{
@@ -751,8 +759,14 @@ details{
     overflow: hidden;
 }
 .mapa iframe{
-    width: clamp(200px,450px,600px);
-    height: clamp(100px,337px,450px);
+    width: 450px;
+    height: 337px;
+}
+@media (max-width:400px) {
+    .mapa iframe{
+    width: 350px;
+    height:200px;
+    }
 }
 
 .links_redes{

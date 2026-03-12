@@ -83,44 +83,11 @@
             </div>  
         </section>
         <section class="contacto">
-            <div class="card_contacto">
-                <div class="header_contacto">
-                    <h2>Contacto y Ubicación</h2>
-                    <p>Estamos aquí para ayudarte. Visítanos o ponte
-                    en contacto con nosotros.</p>
-                </div>
-                <div class="horarios">
-                    <img src="{{ url_for('static',filename='images/ubicacion_icon.png')}}" loading="lazy" alt="icon">
-                    <p><span>Ubicación </span>Sapuyes-Nariño</p>
-                </div>
-                <div  class="horarios">
-                    <img src="{{ url_for('static',filename='images/reloj_icon.png')}}" loading="lazy" alt="icon">
-                    <div>
-                        <p><span>Horario </span>Lunes a  viernes: 9:00 am a 5:00pm
-                        </p>
-                        <p>Sábado y Domingo: Cerrado</p>
-                    </div>    
-                </div>
-                <div class="links_redes">
-                    <a href="https://www.facebook.com/share/18m6ipR7Mh/?mibextid=wwXIfr" target="blank">
-                        <img class="redes_icon" src="{{ url_for('static',filename='images/fb_icon.png')}}" loading="lazy" alt="icon" title="Facebook">
-                    </a>
-                    <a href="https://wa.me/573188540936" target="blank">
-                        <img class="redes_icon" src="{{ url_for('static',filename='images/wpp_icon.png')}}" loading="lazy" alt="icon" title="WhatsApp">
-                    </a>
-                </div>
-            </div>
-            <div class="mapa">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15956.657412598479!2d-77.63891106569488!3d1.037396990030011!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e29489cdb270395%3A0x748396bcd8fd716e!2sSapuyes%2C%20Nari%C3%B1o!5e0!3m2!1ses-419!2sco!4v1772120990445!5m2!1ses-419!2sco" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
+            {% include "info/contacto.html" %}
         </section>
     </main>
     <footer>
-        <img src="{{url_for('static',filename='images/logo_quinazaur.png')}}" loading="lazy" alt="logo">
-        <p>© 2025 Quinazaur. Todos los derechos reservados.</p>
-        <p>Diseño y desarrollo: RosaMaría Muñoz, Damarys Revelo, María José Guerrero, Erika pinchao, Sebastián Benavides, Arbey Cadena, Camilo Cabrera</p>
-        <p>Contáctanos: 3147799126</p>
-        <p></p>
+        {% include "info/footer.html" %}
     </footer>
 <script src="{{url_for('static',filename='/js/script.js')}}"></script>
 </body>
