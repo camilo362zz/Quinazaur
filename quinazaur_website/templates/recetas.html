@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quinazaur</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/basics.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/recetas.css')}}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,9 +17,11 @@
 </head>
 <body>
     <header class="navbar">
-        <div class="logo">
-            <img src="{{url_for('static', filename='/images/logo_quinazaur.png')}}" loading="lazy" alt="Logo" title="Inicio">
-            <h1>Recetario Saludable</h1>
+        <div class="nav-izq">
+            <a href="{{url_for('inicio')}}">
+            <img  class="logo" src="{{url_for('static', filename='/images/logo_quinazaur.png')}}" loading="lazy" alt="Logo" title="Inicio">
+            </a>
+            <h1 class="titulo">Recetario Saludable</h1>
         </div>
         <nav class="links">
             <button class="cerrar-menu"><img src="{{url_for('static',filename='images/cerrar_menu.png')}}" loading="lazy" alt="icon"></button>

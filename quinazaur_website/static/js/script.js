@@ -1,4 +1,6 @@
-console.log("Conected to JS")
+console.log("Conectado a script.js")
+
+// MODAL DEL PRODUCTO
 function AbrirModal(){
     document.getElementById("modal_card").style.display="flex";
     document.getElementById("md-c").style.animation="slidey 0.25s ease";
@@ -34,8 +36,6 @@ Me gustaría conocer detalles como presentación, precio, beneficios nutricional
 
 Quedo atento(a) a tu amable respuesta. Muchas gracias ${sonrisa}`
 ;
-        console.log(mensaje)
-    
         document.getElementById("img-producto").src=img;
         document.getElementById("nombre-producto").textContent=nombre;
         document.getElementById("descripcion-producto").textContent=descripcion;
@@ -56,6 +56,10 @@ Quedo atento(a) a tu amable respuesta. Muchas gracias ${sonrisa}`
         AbrirModal();
     })
 });
+//=================================================
+
+
+// MENU PARA MOVIL
 
 function Mostrar_menu(){
     document.querySelectorAll(".section").forEach(link=>{
@@ -78,7 +82,6 @@ function Cerrar_menu(){
     document.querySelector(".cerrar-menu").classList.remove("active");
     document.body.style.overflow='auto';
     document.querySelector(".links").classList.remove("links-cerrar")
-
     }, 190);
     
 }
@@ -103,5 +106,5 @@ document.addEventListener("click", function(event){
     if (!menu.contains(event.target) && !boton.contains(event.target) && menu.classList.contains("links-movil"))  {
         Cerrar_menu();
     }
-
 });
+//=================================================
