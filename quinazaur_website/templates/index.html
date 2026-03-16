@@ -30,9 +30,16 @@
             <a class="section" href="{{url_for('productos')}}">Productos</a>
             <a class="section" href="{{url_for('recetas')}}">Recetario Saludable</a>
             <a class="section" href="{{url_for('compromiso_verde')}}">Compromiso Verde</a>
-            <a class="section" href="" title="Iniciar Sesion">
-                <img src="{{ url_for('static',filename='images/user_icon.png')}}" loading="lazy" alt="icon">
-            </a>
+            {% if "user_id" in session %}
+                <a class="section" href="{{url_for('perfil')}}" title="Mi Perfil">
+                    <img src="{{ url_for('static',filename='images/perfil.png')}}" loading="lazy" alt="icon">
+                </a>
+            {% else %}    
+                <a class="btn_inicio" href="{{url_for('login')}}" title="Iniciar Sesion">
+                    Iniciar Sesion
+                </a>
+            {% endif %}    
+            
         </nav>
         <button class="abrir-menu">
             <span></span>
@@ -147,5 +154,5 @@
         {% include "info/footer.html" %}
     </footer>
 </body>
-<script src="{{url_for('static',filename='/js/script.js')}}"></script>
+<script src="{{url_for('static',filename='/js/menu.js')}}"></script>
 </html>

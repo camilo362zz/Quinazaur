@@ -1,0 +1,227 @@
+@keyframes slidey {
+    from{
+        opacity: 0;
+        transform: translateY(100px);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pop {
+    from{
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to{
+        opacity: 1;
+        transform: scale(1)
+    }
+}
+
+
+.editar-perfil{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 3vw; 
+    animation: slidey 0.3s ease;
+}
+
+.card-perfil{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    justify-content: center;
+    align-items: center;
+    padding: clamp(10px,5vh,50px) clamp(10px,5vw,50px);
+    background-color: #fff;
+    box-shadow: 5px 5px 20px 5px rgb(0, 0, 0, 0.1);
+    border-radius: 20px;
+    width: clamp(300px,90vw,650px);
+    animation: pop 0.25s ease;
+}
+
+.header-card{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+.header-card img{
+    height: 3rem;
+}
+
+h1{
+    font-family: "Playfair Display";
+    font-weight: 700;
+    font-size: 2rem;
+    color: #1F2937;
+    width: 100%;
+    text-align: center;
+}
+
+.card-body{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+fieldset{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0.7rem;
+    font-family: "Poppins";
+    font-weight: 500;
+    font-size: 0.8rem;
+    color: #6B7280;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 1.5rem;
+    border: 1px solid #E5E7EB;
+    border-radius:10px;
+}
+
+legend{
+    font-weight: 700;
+    color: #1F2937;
+    font-size: 0.8rem;
+}
+
+.dato{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: start;
+    justify-content: center;
+}
+
+.input-dato{
+    width: 100%;
+    padding: 0.5rem 1rem;
+    background: #F0F0F0;
+    border: 1px solid #E5E7EB;
+    border-radius:16px ;
+    font-size: 0.8rem;
+}
+
+.card-footer{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.btn-guardar-cambios{
+    text-decoration: none;
+    height: 2.2rem;
+    font-family: "Poppins";
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: #fff;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    text-align: center;
+    border-radius: 15px;
+    background: #6A1B9A;
+    transition: all 0.25s ease-in-out;
+}
+.btn-guardar-cambios:hover{
+    background: #360d4f;
+    transform: scale(1.05);
+}
+
+.btn-cancelar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem 0.8rem;
+    text-align: center;
+    height: 2.2rem;
+    font-family: "Poppins";
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: #1F2937;
+    border-radius: 15px;
+    background: #F0F0F0;
+    border: 1px solid #E5E7EB;
+    transition: all 0.25s ease-in-out;
+    text-decoration: none;
+}
+.btn-cancelar:hover{
+    transform: scale(1.05);
+    background: #dedede;
+}
+/*=========================================*/
+
+
+.overlay{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    background: rgb(0, 0, 0, 0.5);
+    overflow: hidden;
+    
+}
+.mensaje{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 16px;
+    gap: 5px;
+    padding: 40px;
+    background-color: #fff;
+    animation: pop 0.3s ease-in-out;
+    max-width: 95vw;
+}
+.mensaje h2{
+    font-family: "Playfair Display";
+    font-size: 1.7rem;
+}
+.mensaje p{
+    font-family: "Poppins";
+    font-size: 0.9rem;
+    color: #475569;
+    font-weight: 300;
+    text-align: center;
+}
+.mensaje a{
+    margin-top: 25px;
+    font-family: "Poppins";
+    display: flex;
+    text-decoration: none;
+    background: #6A1B9A;
+    border-radius: 16px;
+    padding: 0.2rem 0.5rem;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    transition: all 0.25s ease-in-out;
+}
+.mensaje a:hover{
+    background: #360d4f;
+}
+
+.inactivo{
+    overflow: hidden;
+    animation: none;
+}
+
+
+

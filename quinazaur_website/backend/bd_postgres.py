@@ -1,5 +1,7 @@
 import psycopg2
 from psycopg2.extras import RealDictCursor
+from werkzeug.security import check_password_hash
+from Errors import *
 
 class bd_postgres:
     def __init__(self,host,port,database,user,password):
@@ -98,3 +100,79 @@ class bd_postgres:
         query="select i.titulo_imagen, i.ruta  from informacion.imagen i order by random()"
         result=self.execute_query(query, fetch=True)
         return result
+    
+    def verificar_user(self, email, telefono):
+        valido=True
+        query1="select u.email from usuarios.usuario u"
+        query2="select u.telefono from usuarios.usuario u"
+        emails=self.execute_query(query1,fetch=True)
+        telefonos=self.execute_query(query2,fetch=True)
+        for e in emails:
+            if e["email"]==email:
+                valido=False
+                raise ErrorRegistro("Ese correo ya está registrado")
+        for t in telefonos:
+            if t["telefono"]==telefono:
+                valido=False
+                raise ErrorRegistro("Ese teléfono ya está registrado")        
+        return valido
+
+
+
+    def agregar_usuario(self,nombre,email,telefono,password):
+        if self.verificar_user(email,telefono):
+            query="insert  into usuarios.usuario (nombre, email, telefono, password) values (%s,%s,%s,%s)"
+            self.execute_query(query,(nombre,email,telefono,password))
+            print("Usuario registrado") 
+        else:
+            return   
+
+    def validar_login(self, email, password):
+        query="select u.password  from usuarios.usuario u where u.email = %s"
+        key=self.execute_query(query, (email,) ,fetch=True)
+        key=key[0]["password"]
+        if check_password_hash(key,password):
+            return True
+        else:
+            raise ErrorLogin("Credenciales Incorrectas") 
+        
+    def obtener_id(self, email):
+        query="select u.id_usuario from usuarios.usuario u where u.email = %s"
+        id=self.execute_query(query, (email,), fetch=True)
+        id=id[0]["id_usuario"]
+        return id
+    
+    def get_perfil(self,id):
+        query="select u.nombre, u.email, u.telefono, u.rol from usuarios.usuario u where u.id_usuario= %s"
+        result=self.execute_query(query,(id,), fetch=True)
+        return result
+    
+    def validar_password(self, id, password):
+        query="select u.password  from usuarios.usuario u where u.id_usuario = %s"
+        key=self.execute_query(query, (id,) ,fetch=True)
+        key=key[0]["password"]
+        if check_password_hash(key,password):
+            return True
+        else:
+            raise ErrorLogin("Contraseña Incorrecta") 
+        
+    def actualizar_user(self, id, nombre, telefono):
+            query="update usuarios.usuario u set nombre=%s , telefono=%s where u.id_usuario =%s"
+            result=self.execute_query(query,(nombre,telefono,id))
+            return result
+    
+    def actualizar_password(self, id, password):
+            query="update usuarios.usuario u set password=%s where u.id_usuario =%s"
+            result=self.execute_query(query,(password,id))
+            return result
+    
+    def validar_telefono(self, telefono):
+            valido=True
+            query="select u.telefono from usuarios.usuario u "
+            telefonos=self.execute_query(query, fetch=True)
+            for tel in telefonos:
+                if tel["telefono"]==telefono:
+                    valido=False
+                    raise ErrorRegistro("Ese teléfono ya está en uso")
+            return valido
+            

@@ -58,8 +58,9 @@ footer img{
 /* ===BARRA DE NAVEGACIÓN=== */
 .navbar{
     position: relative;
+    z-index: 1;
     display: flex;
-    padding: clamp(10px,5vh,30px) clamp(10px,5vw,40px);
+    padding: clamp(10px,5vh,30px) clamp(10px,5vw,30px);
     width: 100%;
     align-items: center;
     justify-content: space-between;
@@ -122,8 +123,8 @@ footer img{
     color: #fff;
     font-family: "Plus Jakarta Sans";
     background-color: #000;
-    border-radius: 10px;
-    padding: 10px 20px;
+    border-radius: 15px;
+    padding: 0.5rem 1rem;
     font-size: clamp(0.5rem,4vw,0.9rem);
     transition: transform 0.25s ease-in-out;
 }
@@ -133,6 +134,7 @@ footer img{
 .btn_inicio:active{
     transform: scale(0.8);
 }
+
 
 
 /*==============boton hamburguesa=======================*/
@@ -196,14 +198,24 @@ footer img{
 }
 
 @media (max-width:810px) {
+    .section img{
+    filter:brightness(0); 
+    }
+    .section img:hover{
+    transform: scale(1.05);
+    filter:none;
+    }
+
     .abrir-menu{
         display: flex;
-        
     }
     
     .links{
         animation: cerrar 0.2s ease;
         display: none;
+    }
+    .btn_inicio{
+        margin-top: 15px;
     }
 }
 

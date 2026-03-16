@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quinazaur</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/basics.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/perfil.css')}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="navbar">
+        <div class="nav-izq">
+            <a href="{{url_for('inicio')}}">
+            <img  class="logo" src="{{url_for('static', filename='/images/logo_quinazaur.png')}}" loading="lazy" alt="Logo" title="Inicio">
+            </a>
+        </div>
+        <nav class="links">
+            <button class="cerrar-menu"><img src="{{url_for('static',filename='images/cerrar_menu.png')}}" loading="lazy" alt="icon"></button>
+            <a class="section" href="{{url_for('productos')}}">Productos</a>
+            <a class="section" href="{{url_for('recetas')}}">Recetario Saludable</a>
+            <a class="section" href="{{url_for('compromiso_verde')}}">Compromiso Verde</a>
+            <a class="btn_inicio" href="{{url_for('inicio')}}">Inicio</a>
+        </nav>
+        <button class="abrir-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+    <main>
+        <section  class="perfil">
+            <div class="card-perfil">
+                <div class="header-card">
+                    <h1>Mi Perfil</h1>
+                    <p>Gestiona tu información personal</p>
+                </div>
+                <div class="card-body">
+                    {% for u in user%}
+                        <div class="datos" title="Nombre">
+                            <img class="icon" src="{{url_for('static',filename='images/user-icon.png')}}" loading="lazy" alt="icon">
+                            <p>{{u.nombre}}</p>
+                        </div>
+                        <div class="datos" title="Correo">
+                            <img class="icon" src="{{url_for('static',filename='images/email-icon.png')}}" loading="lazy" alt="icon" >
+                            <p>{{u.email}}</p>
+                        </div>
+                        <div class="datos" title="Teléfono">
+                            <img class="icon" src="{{url_for('static',filename='images/telefono-icon.png')}}" loading="lazy" alt="icon" >
+                            <p>{{u.telefono}}</p>
+                        </div>
+                        <div class="datos" title="Rol">
+                            <img class="icon" src="{{url_for('static',filename='images/rol-icon.png')}}" loading="lazy" alt="icon" >
+                            <p>{{u.rol}}</p>
+                        </div>
+                    {% endfor %}    
+                </div>
+                <div class="card-footer">
+                    <a href="{{url_for('editar_perfil')}}" class="btn-editar-perfil">Editar Perfil</a>
+                    <a href="/logout" id="btn-editar-perfil" class="cerrar-sesion">Cerrar Sesion</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        {% include "info/footer.html" %}
+    </footer>
+</body>
+<script src="{{url_for('static',filename='/js/menu.js')}}"></script>
+</html>
