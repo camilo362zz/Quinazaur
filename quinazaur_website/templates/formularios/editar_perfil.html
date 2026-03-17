@@ -46,10 +46,10 @@
         <section  class="{% if error %}inactivo{% else %}editar-perfil{% endif %}">
             <div class="card-perfil">
                 <div class="header-card">
-                    <img src="{{url_for('static', filename='/images/user-icon.png')}}" loading="lazy" alt="icon">
+                    <img src="{{url_for('static', filename='/images/perfil.png')}}" loading="lazy" alt="icon">
                     <h1>Mi Perfil</h1>
                 </div>
-                <form class="card-body" action="/editar-perfil" method="post" id="formulario">
+                <form class="card-body" action="{{url_for('editar_perfil')}}" method="post" id="formulario">
                     {% for u in user %}
                         <fieldset>
                             <legend>Información Personal</legend>

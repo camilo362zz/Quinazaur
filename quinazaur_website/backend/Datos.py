@@ -254,3 +254,39 @@ class Modificar:
 
     def get_password_nueva(self):
         return self.__password_nueva       
+    
+
+
+#////////////////////////////////////////////////////////////////
+# CLASE PARA VALIDAR PASSWORD CUANDO SE OLVIDA 
+#////////////////////////////////////////////////////////////////
+
+class ResetPassword:
+    __password_nueva=""
+
+    def __init__(self,password_nueva, confirmacion):
+        self.set_password_nueva(password_nueva, confirmacion)
+
+
+    def set_password_nueva(self,password_nueva, confirmacion):
+
+        if password_nueva!=confirmacion:
+            raise ErrorRegistro("Los campos no coinciden")
+        
+        p=password_nueva.strip()
+        if p!=password_nueva:
+            raise ErrorRegistro("La nueva contraseña no debe tener espacios al inicio o al final")
+
+        if len(p)<8:
+            raise ErrorRegistro("La nueva contraseña debe tener al menos 8 caracteres")
+        
+        if len(p)>100:
+            raise ErrorRegistro("Nueva contraseña demasiado larga")
+
+        self.__password_nueva=generate_password_hash(p)     
+
+
+    def get_password_nueva(self):
+        return self.__password_nueva    
+
+

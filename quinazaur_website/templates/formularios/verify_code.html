@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quinazaur</title>
     <link rel="stylesheet" href="{{ url_for('static',filename='css/basics.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/registro.css')}}">
-
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/login.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/form_reset.css')}}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,31 +39,28 @@
             <div  class="mensaje">
                 <h2>ERROR</h2>
                 <p>{{error}}</p>
-                <a id="cerrar-msg" href="{{url_for('login')}}">Cerrar</a>
+                <a id="cerrar-msg" href="{{url_for('verify_code')}}">Cerrar</a>
             </div>
             </div>
             {% endif %}
-        <section id="section-inicio-sesion" class="{% if error %}inactivo{% else %}iniciar-sesion{% endif %}">
+        <section id="section-reset" class="{% if error %}inactivo{% else %}reset{% endif %}">
             <div class="container-formulario">
                 <img class="logo" src="{{url_for('static', filename='images/logo_quinazaur.png')}}" loading="lazy" alt="Logo">
                 <div class="formulario">
                     <div class="header-formulario">
-                        <span><h1>Bienvenido</h1>
-                        <p>Inicia sesion en tu cuenta</p></span>
+                        <h1>Restablece tu contraseña</h1>
+                        <p>Si el correo ingresado está registrado, recibirás un código de verificación.</p>
+                        <p>Revisa también la carpeta de spam o correo no deseado.
+                        </p>
                     </div>
-                    <form class="container-datos" method="post" action="/login" id="formulario">
-                        <label class="dato" for="email">Correo Electrónico
-                            <input class="input-dato" name="correo" id="email" type="email" placeholder="ejemplo@gmail.com" required>
+                    <form class="container-campos" method="post" action="{{url_for('verify_code')}}" id="formulario">
+                        <label class="campo" for="codigo-recuperacion">Código de 6 dígitos
+                            <input class="input-dato" name="codigo-recuperacion" id="codigo-recuperacion" type="text" maxlength="6" minlength="6" inputmode="numeric" placeholder="******" autocomplete="off" required>
                         </label>
-                        <label class="dato" for="contraseña">Contraseña
-                            <input class="input-dato" name="contraseña" id="contraseña" type="password" placeholder="Mínimo 8 caracteres" required>
-                            <a href="">¿Olvidaste tu contraseña?</a>
-                        </label>
-                        <button class="btn-registrar" type="submit">Iniciar Sesion</button>
+                        <button class="btn-1" type="submit">Verificar Código</button>
                     </form>
                     <div class="footer-registro">
-                        <div class="space"> <span></span><p>ó</p><span></span> </div>
-                        <a id="btn-enviar-datos" class="btn-crear-cuenta" href="{{url_for('registro')}}" >Crear Cuenta</a>
+                        <a id="btn-enviar-datos" class="btn-2" href="{{url_for('reset_password')}}" >Volver</a>
                     </div>
                 </div>    
             </div>

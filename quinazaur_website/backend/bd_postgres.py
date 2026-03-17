@@ -78,7 +78,6 @@ class bd_postgres:
         return result 
     
     def buscar_receta(self,q):
-        print(f"search: {q}")
         key=f"{q}"
         key=key.strip("+")
         query="SELECT r.id_receta, r.nombre_receta, r.descripcion_receta, imagen_receta,(SELECT json_agg(json_build_object('ingrediente', i.nombre_ingrediente,'cantidad', ir.cantidad)) FROM recetas.ingrediente_receta ir JOIN recetas.ingredientes i  ON i.id_ingrediente = ir.id_ingrediente WHERE ir.id_receta = r.id_receta) AS ingredientes, (SELECT json_agg(p.descripcion ORDER BY p.orden asc) FROM recetas.pasos p WHERE p.id_receta = r.id_receta) AS pasos FROM recetas.recetas r WHERE r.id_receta in (select distinct r.id_receta from recetas.recetas r join recetas.ingrediente_receta ir on r.id_receta =ir.id_receta join recetas.ingredientes i on i.id_ingrediente =ir.id_ingrediente where to_tsvector('spanish',r.nombre_receta) @@plainto_tsquery('spanish',%s) or to_tsvector('spanish',i.nombre_ingrediente) @@plainto_tsquery('spanish',%s) or to_tsvector('spanish',r.descripcion_receta) @@plainto_tsquery('spanish',%s))"
@@ -118,7 +117,6 @@ class bd_postgres:
         return valido
 
 
-
     def agregar_usuario(self,nombre,email,telefono,password):
         if self.verificar_user(email,telefono):
             query="insert  into usuarios.usuario (nombre, email, telefono, password) values (%s,%s,%s,%s)"
@@ -127,45 +125,59 @@ class bd_postgres:
         else:
             return   
 
+
     def validar_login(self, email, password):
         query="select u.password  from usuarios.usuario u where u.email = %s"
         key=self.execute_query(query, (email,) ,fetch=True)
-        key=key[0]["password"]
-        if check_password_hash(key,password):
-            return True
-        else:
-            raise ErrorLogin("Credenciales Incorrectas") 
+        if key:
+            key=key[0]["password"]
+            if check_password_hash(key,password):
+                return True
+            else:
+                raise ErrorLogin("Credenciales Incorrectas")
+        raise ErrorLogin("Credenciales Incorrectas")     
         
+
     def obtener_id(self, email):
         query="select u.id_usuario from usuarios.usuario u where u.email = %s"
         id=self.execute_query(query, (email,), fetch=True)
-        id=id[0]["id_usuario"]
+        if id:
+            id=id[0]["id_usuario"]
+        else:
+            id=None    
         return id
     
+
     def get_perfil(self,id):
         query="select u.nombre, u.email, u.telefono, u.rol from usuarios.usuario u where u.id_usuario= %s"
         result=self.execute_query(query,(id,), fetch=True)
         return result
     
+
     def validar_password(self, id, password):
         query="select u.password  from usuarios.usuario u where u.id_usuario = %s"
         key=self.execute_query(query, (id,) ,fetch=True)
+        if not key:
+            return ErrorLogin("Error")
         key=key[0]["password"]
         if check_password_hash(key,password):
             return True
         else:
             raise ErrorLogin("Contraseña Incorrecta") 
         
+
     def actualizar_user(self, id, nombre, telefono):
             query="update usuarios.usuario u set nombre=%s , telefono=%s where u.id_usuario =%s"
             result=self.execute_query(query,(nombre,telefono,id))
             return result
     
+
     def actualizar_password(self, id, password):
             query="update usuarios.usuario u set password=%s where u.id_usuario =%s"
             result=self.execute_query(query,(password,id))
             return result
     
+
     def validar_telefono(self, telefono):
             valido=True
             query="select u.telefono from usuarios.usuario u "
@@ -175,4 +187,47 @@ class bd_postgres:
                     valido=False
                     raise ErrorRegistro("Ese teléfono ya está en uso")
             return valido
-            
+
+
+    def subir_codigo(self, id, code, f_exp):
+        query1="delete from usuarios.codigo_recuperacion cr where cr.id_usuario= %s"
+        query2="insert into usuarios.codigo_recuperacion (id_usuario, code, fecha_exp) values (%s, %s, %s)" 
+        query3="delete from usuarios.codigo_recuperacion cr where cr.fecha_exp < now()"
+        self.execute_query(query1, (id,)) 
+        result=self.execute_query(query2,(id,code,f_exp))
+        self.execute_query(query3)
+        return result 
+
+
+    def verificar_code(self, id, code):
+        query1="select cr.code from usuarios.codigo_recuperacion cr where id_usuario= %s and cr.fecha_exp > now()" 
+        query2="delete from usuarios.codigo_recuperacion cr where cr.id_usuario= %s"
+        codigo_valido=self.execute_query(query1,(id,), fetch=True)
+        if not codigo_valido:
+            return False
+        if codigo_valido[0]["code"]==code:
+            self.execute_query(query2,(id,))
+            return True
+        return False     
+        
+
+    def subir_codigo_verificacion(self, email, code, f_exp):
+        query1="delete from usuarios.codigo_verificacion cv where cv.email= %s"
+        query2="insert into usuarios.codigo_verificacion (email, code, fecha_exp) values (%s, %s, %s)" 
+        query3="delete from usuarios.codigo_recuperacion cr where cr.fecha_exp < now()"
+        self.execute_query(query1, (email,)) 
+        result=self.execute_query(query2,(email,code,f_exp))
+        self.execute_query(query3)
+        return result     
+
+
+    def verificar_code_email(self, email, code):
+        query1="select cv.code from usuarios.codigo_verificacion cv where email= %s and cv.fecha_exp > now()" 
+        query2="delete from usuarios.codigo_verificacion cv where cv.email= %s"
+        codigo_valido=self.execute_query(query1,(email,), fetch=True)
+        if not codigo_valido:
+            return False
+        if codigo_valido[0]["code"]==code:
+            self.execute_query(query2,(email,))
+            return True
+        return False  

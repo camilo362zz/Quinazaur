@@ -6,7 +6,7 @@
     <div class="container-fotos">
         {% for img in img%}
             <figure class="item">
-                <img class="item-img" src="{{url_for('static', filename=img.ruta)}}">
+                <img class="item-img" src="{{url_for('static', filename=img.ruta)}}" loading="lazy" alt="Galeria">
                 <figcaption class="item-titulo">{{img.titulo_imagen}}</figcaption>
             </figure>
         {% endfor %}    
