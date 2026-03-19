@@ -62,9 +62,9 @@ main{
     text-align: center;
 }
 .banner h1{
-    font-family: "Playfair Display";
+    font-family: "serif";
     font-size: clamp(3rem, 15vw, 7rem);
-    font-weight: 800;
+    font-weight: 700;
 }
 .banner h2{
     font-family: "Nunito";
@@ -149,9 +149,9 @@ main{
     
 }
 .valores h2 {
-    font-family: "Playfair Display";
+    font-family: "serif";
     font-size: 2.5rem;
-    font-weight:900;
+    font-weight:700;
 }
 
 .container_valores{
@@ -211,9 +211,9 @@ main{
 }
 .proysoc_header h2{
     text-align: center;
-    font-family: "Playfair Display";
+    font-family: "serif";
     font-size: 2.5rem;
-    font-weight:900;
+    font-weight:700;
 }
 
 .proysoc_cont{

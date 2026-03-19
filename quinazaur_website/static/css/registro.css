@@ -59,7 +59,7 @@
     height: auto;
 }
 h1{
-    font-family: "Playfair Display";
+    font-family: "serif";
     font-weight: 700;
     font-size: 2.4rem;
     color: #6A1B9A;
@@ -171,7 +171,7 @@ span >p{
 }
 
 .mensaje h2{
-    font-family: "Playfair Display";
+    font-family: "serif";
     font-size: 1.7rem;
 }
 .mensaje p{

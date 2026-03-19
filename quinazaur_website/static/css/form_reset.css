@@ -78,7 +78,7 @@
 }
 
 .header-formulario h1{
-    font-family: "Playfair Display";
+    font-family: "serif";
     font-weight: 700;
     font-size: 2.3rem;
     color: #6A1B9A;
@@ -118,7 +118,6 @@
     width: 100%;
     border: 1.1px solid #CBD5E1;
     border-radius: 16px;
-    font-family: "Nunito";
     font-family: "Nunito";
     font-weight: 400;
     font-size: 0.85rem;
@@ -222,7 +221,7 @@
     max-width: 95vw;
 }
 .mensaje h2{
-    font-family: "Playfair Display";
+    font-family: "serif";
     font-size: 1.7rem;
 }
 .mensaje p{

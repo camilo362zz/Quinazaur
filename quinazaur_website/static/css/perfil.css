@@ -54,7 +54,7 @@
 }
 
 h1{
-    font-family: "Playfair Display";
+    font-family: "serif";
     font-weight: 700;
     font-size: 2.3rem;
     color: #6A1B9A;
@@ -155,72 +155,6 @@ h1{
 }
 /*=========================================*/
 
-
-
-
-
-
-
-
-
-
-
-
-.overlay{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    inset: 0;
-    z-index: 99;
-    background: rgb(0, 0, 0, 0.5);
-    overflow: hidden;
-    
-}
-.mensaje{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    border-radius: 16px;
-    gap: 5px;
-    padding: 40px;
-    background-color: #fff;
-    animation: pop 0.3s ease-in-out;
-    max-width: 95vw;
-}
-.mensaje h2{
-    font-family: "Playfair Display";
-    font-size: 1.7rem;
-}
-.mensaje p{
-    font-family: "Poppins";
-    font-size: 0.9rem;
-    color: #475569;
-    font-weight: 300;
-    text-align: center;
-}
-.mensaje a{
-    margin-top: 25px;
-    font-family: "Poppins";
-    display: flex;
-    text-decoration: none;
-    background: #6A1B9A;
-    border-radius: 16px;
-    padding: 0.2rem 0.5rem;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    transition: all 0.25s ease-in-out;
-}
-.mensaje a:hover{
-    background: #360d4f;
-}
-
-.inactivo{
-    overflow: hidden;
-    animation: none;
-}
 
 
 

@@ -199,7 +199,7 @@ body{
     border-radius: 15px;
 }
 .header-noticias h2{
-    font-family: "Playfair Display";
+    font-family: "serif";
     font-weight: 700;
     font-size: 2.5rem;
     color: #fff;
@@ -278,7 +278,7 @@ body{
 .text-noticia h3{
     width: 100%;
     justify-content: left;
-    font-family: "Payfair Display";
+    font-family: "serif";
     font-size: 1.5rem;
     font-weight: bold;
 }

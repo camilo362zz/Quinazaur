@@ -27,7 +27,7 @@ def correo_reset(email,nombre,code,min):
     message = Mail(
     from_email="pruebaquinazaur@gmail.com",
     to_emails=email,
-    subject='Recupera el Acceso a tu Cuenta',
+    subject='Código de recuperación',
     html_content=html)
     try:
         sg = SendGridAPIClient(sendgridKey)
@@ -47,7 +47,7 @@ def correo_verificacion(email,nombre,code,min):
     message = Mail(
     from_email="pruebaquinazaur@gmail.com",
     to_emails=email,
-    subject='Verifica tu correo',
+    subject='Código de verificación',
     html_content=html)
     try:
         sg = SendGridAPIClient(sendgridKey)
@@ -127,7 +127,9 @@ def compromiso_verde():
     if not section:
         section="presentacion" 
         return render_template("compromiso_verde.html",section=section)
-    
+    if section=="presentacion":
+        return render_template("compromiso_verde.html", section=section)
+
     # NOTICIAS
     if section=="noticias":
         if not buscar:
@@ -148,6 +150,7 @@ def compromiso_verde():
         db.disconnect()
         return render_template("compromiso_verde.html",section=section, img=imgs) 
 
+    return redirect(url_for("compromiso_verde",section="presentacion"))
 
 # PAGINA REGISTRO =============================================================================
 @app.route("/registro", methods=["GET","POST"])

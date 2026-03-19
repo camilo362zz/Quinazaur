@@ -20,13 +20,13 @@
         {% endif %}    
         {% for noticia in noticias%}
             <div class="card-noticia">
-                <img class="img-noticia" src="{{url_for('static',filename=noticia.imagen_noticia)}}">
+                <img class="img-noticia" src="{{url_for('static',filename=noticia.imagen_noticia)}}" alt="Noticia">
                 <div class="text-noticia">
                     <p class="fecha-noticia">Publicado: {{noticia.fecha_publicacion.day}} {{meses[noticia.fecha_publicacion.month-1]}} {{noticia.fecha_publicacion.year}} </p>
                     <h3>{{noticia.titulo_noticia}}</h3>
                     <p class="descripcion-corta-noticia">{{noticia.descripcion_corta}}</p>                                
                     <details>
-                        <summary class="btn-ver-mas-noticia">Leer más</summary>
+                        <summary aria-label="Ver Más" class="btn-ver-mas-noticia">Leer más</summary>
                         <p class="descripcion-completa-noticia">{{noticia.descripcion_completa}}</p>
                     </details>
                 </div>

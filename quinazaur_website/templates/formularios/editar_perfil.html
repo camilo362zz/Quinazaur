@@ -3,14 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Edita tu perfil">
+    <meta name="robots" content="index, follow">
+
     <title>Quinazaur</title>
+
     <link rel="stylesheet" href="{{ url_for('static',filename='css/basics.css')}}">
     <link rel="stylesheet" href="{{ url_for('static',filename='css/editar_perfil.css')}}">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400&display=swap" rel="stylesheet">
+    
     <script src="{{url_for('static',filename='/js/script2.js')}}"></script>
 </head>
 <body class="{% if error %}inactivo{% endif %}">
@@ -21,13 +27,13 @@
             </a>
         </div>
         <nav class="links">
-            <button class="cerrar-menu"><img src="{{url_for('static',filename='images/cerrar_menu.png')}}" loading="lazy" alt="icon"></button>
+            <button class="cerrar-menu" aria-label="Cerrar Menu"><img src="{{url_for('static',filename='images/cerrar_menu.png')}}" loading="lazy" alt="icon"></button>
             <a class="section" href="{{url_for('productos')}}">Productos</a>
             <a class="section" href="{{url_for('recetas')}}">Recetario Saludable</a>
             <a class="section" href="{{url_for('compromiso_verde')}}">Compromiso Verde</a>
             <a class="btn_inicio" href="{{url_for('inicio')}}">Inicio</a>
         </nav>
-        <button class="abrir-menu">
+        <button class="abrir-menu" title="Menu" aria-label="Abrir Menu">
             <span></span>
             <span></span>
             <span></span>
@@ -73,8 +79,8 @@
                             </label>
                         </fieldset>
                         <div class="card-footer">
-                            <a class="btn-cancelar" href="/perfil">Cancelar</a>
-                            <button id="btn-enviar-datos" class="btn-guardar-cambios" type="submit">Guardar Cambios</button>
+                            <a class="btn-cancelar" href="/perfil" aria-label="Cancelar">Cancelar</a>
+                            <button id="btn-enviar-datos" class="btn-guardar-cambios" type="submit" aria-label="Guardar Cambios">Guardar Cambios</button>
                     {% endfor %}
                         </div>
                     
