@@ -17,15 +17,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400&display=swap" rel="stylesheet">
 </head>
-<body>
+
+{% set ns = namespace(msg=False, messages=[]) %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% set ns.msg = True %}
+        {% set ns.messages = messages %}
+    {% endif %}
+{% endwith %}
+
+<body  class="{{'inactivo' if ns.msg}}">
     <header class="navbar">
         <div class="nav-izq">
             <a href="{{url_for('inicio')}}">
-            <img  class="logo" src="{{url_for('static', filename='/images/logo_quinazaur.png')}}" loading="lazy" alt="Logo" title="Inicio">
+            <img  class="logo" src="{{url_for('static', filename='/images/logo_quinazaur.webp')}}" loading="lazy" alt="Logo" title="Inicio">
             </a>
         </div>
         <nav class="links">
-            <button class="cerrar-menu" aria-label="Cerrar Menu"><img src="{{url_for('static',filename='images/cerrar_menu.png')}}" loading="lazy" alt="icon"></button>
+            <button class="cerrar-menu" aria-label="Cerrar Menu"><img src="{{url_for('static',filename='images/cerrar_menu.webp')}}" loading="lazy" alt="icon"></button>
             <a class="section" href="{{url_for('productos')}}">Productos</a>
             <a class="section" href="{{url_for('recetas')}}">Recetario Saludable</a>
             <a class="section" href="{{url_for('compromiso_verde')}}">Compromiso Verde</a>
@@ -38,7 +48,20 @@
         </button>
     </header>
     <main>
-        <section  class="perfil">
+
+        {% for category, message in ns.messages %}
+            {% if category=="aviso" %}
+                <div class="overlay" id="mensaje">
+                    <div  class="mensaje">
+                        <h2>Completado</h2>
+                        <p>{{message}}</p>
+                        <a id="cerrar-msg" href="{{url_for('perfil')}}" aria-label="Cerrar">Cerrar</a>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <section id="section" class="{% if ns.msg %}inactivo{% else %}perfil{% endif %}">
             <div class="card-perfil">
                 <div class="header-card">
                     <h1>Mi Perfil</h1>
@@ -47,19 +70,19 @@
                 <div class="card-body">
                     {% for u in user%}
                         <div class="datos" title="Nombre">
-                            <img class="icon" src="{{url_for('static',filename='images/user-icon.png')}}" loading="lazy" alt="icon">
+                            <img class="icon" src="{{url_for('static',filename='images/user-icon.webp')}}" loading="lazy" alt="icon">
                             <p>{{u.nombre}}</p>
                         </div>
                         <div class="datos" title="Correo">
-                            <img class="icon" src="{{url_for('static',filename='images/email-icon.png')}}" loading="lazy" alt="icon" >
+                            <img class="icon" src="{{url_for('static',filename='images/email-icon.webp')}}" loading="lazy" alt="icon" >
                             <p>{{u.email}}</p>
                         </div>
                         <div class="datos" title="Teléfono">
-                            <img class="icon" src="{{url_for('static',filename='images/telefono-icon.png')}}" loading="lazy" alt="icon" >
+                            <img class="icon" src="{{url_for('static',filename='images/telefono-icon.webp')}}" loading="lazy" alt="icon" >
                             <p>{{u.telefono}}</p>
                         </div>
                         <div class="datos" title="Rol">
-                            <img class="icon" src="{{url_for('static',filename='images/rol-icon.png')}}" loading="lazy" alt="icon" >
+                            <img class="icon" src="{{url_for('static',filename='images/rol-icon.webp')}}" loading="lazy" alt="icon" >
                             <p>{{u.rol}}</p>
                         </div>
                     {% endfor %}    

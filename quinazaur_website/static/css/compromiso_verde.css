@@ -190,7 +190,7 @@ body{
     justify-content:center;
     align-items: start;
     gap: 50px;
-    background:linear-gradient(#0009, #000b), url(../images/bosque1.jpg);
+    background:linear-gradient(#0009, #000b), url(../images/bosque1.webp);
     background-position: top;
     background-size: cover;
     padding: 0 clamp(5px,5%,50px);

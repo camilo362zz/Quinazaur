@@ -11,4 +11,6 @@ document.getElementById("cerrar-msg").addEventListener('click',function(){
     document.body.classList.remove("inactivo");
     document.getElementById("section-registro").classList.remove("inactivo");
     document.getElementById("section-inicio-sesion").classList.remove("inactivo");
+    document.getElementById("section").classList.remove("inactivo");
+
 })

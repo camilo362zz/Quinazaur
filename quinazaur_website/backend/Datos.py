@@ -1,6 +1,6 @@
 from werkzeug.security import generate_password_hash
 from Errors import *
-
+from random import randint
 #///////////////////////////////////////////////////////////////////
 # ESTA CLASE SE USA PAARA VALIDAR LOS DATOS AL HACER UN RESGISTRO
 #///////////////////////////////////////////////////////////////////
@@ -290,3 +290,155 @@ class ResetPassword:
         return self.__password_nueva    
 
 
+#/////////////////////////////////////////////////////////////////////////////////////////////////////////
+# ESTA CLASE VALIDA LOS DATOS DEL PRODUCTO QUE SE VA A SUBIR
+#/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class Producto:
+    __nombre=""
+    __descripcion=""
+    __atributos=[]
+    __precio=0
+    __stock=0
+    __disponible=True
+    __name_img=""
+    __ruta=""
+
+    def __init__(self,nombre,descripcion,atributos,precio,stock,disponible,imagen):
+        self.set_nombre(nombre)
+        self.set_descripcion(descripcion)
+        self.set_atributos(atributos)
+        self.set_precio(precio)
+        self.set_stock(stock)
+        self.set_disponible(disponible)
+        self.set_imagen(imagen)
+
+
+    def set_nombre(self,nombre):
+        n=nombre.strip()
+
+        if len(n)==0:
+            raise ErrorRegistro("El nombre no debe estar vacío")
+        
+        if len(n)<3:
+            raise ErrorRegistro("Nombre muy corto")
+        
+        if len(n)>150:
+            raise ErrorRegistro("Nombre muy largo")
+        
+        self.__nombre=n
+
+    def set_descripcion(self,descripcion):
+        d=descripcion.strip()
+
+        if len(d)==0:
+            raise ErrorRegistro("La descripcion no debe estar vacía")
+        
+        if len(d)<10:
+            raise ErrorRegistro("Descripción muy corta")
+        
+        if len(d)>500:
+            raise ErrorRegistro("Descripción muy larga")
+        
+        self.__descripcion=d
+        
+    def set_atributos(self,atributos):
+        a = [item.strip() for item in atributos.split(",")]
+        
+        if len(a)<1:
+            raise ErrorRegistro("Debe incluir al menos un atributo")
+
+        if len(a)>5:
+            raise ErrorRegistro("Máximo 5 atributos")
+
+        for i in a:
+            i=i.strip()
+            if len(i)==0:
+                raise ErrorRegistro("No debe haber atributos vacíos")
+            
+            if len(i)<3:
+                raise ErrorRegistro("Hay un atributo demasiado corto")
+
+            if len(i)>50:
+                raise ErrorRegistro("Hay un atributo demasiado largo")
+            
+        self.__atributos=a
+
+    def set_precio(self,precio):
+        char=["1","2","3","4","5","6","7","8","9","0",",",".","-","+"]
+        for p in precio:
+            if not p in char:
+                raise ErrorRegistro("Precio solo admite números")
+        p=float(precio)
+        if p<=0:
+            raise ErrorRegistro("El precio no puede ser negativo o cero")
+        self.__precio=p
+        
+    def set_stock(self,stock):
+        char=["1","2","3","4","5","6","7","8","9","0",]
+        for s in stock:
+            if not s in char:
+                raise ErrorRegistro("Stock solo admite números")
+        s=int(stock)
+        if s<0:
+            raise ErrorRegistro("El stock no puede ser negativo")
+        self.__stock=s
+
+    def set_disponible(self, disponible):
+        disponible=int(disponible)
+        if disponible!=1 and disponible!=0:
+            raise ErrorRegistro("Estado solo admite True o False")
+        
+        if disponible==1:
+            self.__disponible=True
+        if disponible==0:
+            self.__disponible=False        
+
+    def set_imagen(self,ruta):
+
+        if ruta=="none":
+            return
+
+        r=ruta.strip()
+        if len(r)==0:
+            raise ErrorRegistro("No hay ningún archivo")
+        if len(r)>50:
+            raise ErrorRegistro("El nombre del archivo es demasiado largo")
+        if not r.endswith(".jpg") and not r.endswith(".png") and not r.endswith(".webp") and not r.endswith(".jpeg"):
+            raise ErrorRegistro("Formato de archivo no válido")
+        
+        newRuta="/images/"
+        digits=[1,2,3,4,5,6,7,8,9,0]
+        id=""
+        for i in range(3):
+            id+=str(digits[randint(0,9)])
+        r=r.replace(" ","_")
+        self.__name_img=id+r   
+        newRuta+=(id+r) 
+
+        self.__ruta=newRuta
+
+    def get_nombre(self):
+        return self.__nombre
+    
+    def get_descripción(self):
+        return self.__descripcion
+    
+    def get_atributos(self):
+        return self.__atributos
+    
+    def get_precio(self):
+        return self.__precio
+    
+    def get_stock(self):
+        return self.__stock
+    
+    def get_disponible(self):
+        return self.__disponible
+    
+    def get_ruta(self):
+        return self.__ruta
+    
+    def get_name_img(self):
+        return self.__name_img
+    

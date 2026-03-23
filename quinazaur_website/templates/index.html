@@ -8,7 +8,7 @@
     
     <meta property="og:title" content="Quinazaur">
     <meta property="og:description" content="Descubre todo sobre Quinazaur">
-    <meta property="og:image" content="{{ url_for('static', filename='images/logo_quinazaur.png') }}">
+    <meta property="og:image" content="{{ url_for('static', filename='images/logo_quinazaur.webp') }}">
     <meta property="og:type" content="website">
 
     <title>Quinazaur</title>
@@ -22,28 +22,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400&display=swap" rel="stylesheet">
     
-    <link rel="preload" as="image" href="{{ url_for('static',filename='images/banner1.jpg')}}">
-    <link rel="preload" as="image" href="{{ url_for('static',filename='images/banner2.jpg')}}">
-    <link rel="preload" as="image" href="{{ url_for('static',filename='images/banner3.jpg')}}">
-    <link rel="preload" as="image" href="{{ url_for('static',filename='images/banner4.jpg')}}">
-    <link rel="preload" as="image" href="{{ url_for('static',filename='images/banner5.jpg')}}">
+    <link rel="preload" as="image" href="{{ url_for('static',filename='images/banner1.webp')}}">
+    <link rel="preload" as="image" href="{{ url_for('static',filename='images/banner2.webp')}}">
+    <link rel="preload" as="image" href="{{ url_for('static',filename='images/banner3.webp')}}">
+    <link rel="preload" as="image" href="{{ url_for('static',filename='images/banner4.webp')}}">
+    <link rel="preload" as="image" href="{{ url_for('static',filename='images/banner5.webp')}}">
     
 </head>
 <body>
     <header class="navbar">
         <div class="nav-izq">
             <a href="{{url_for('inicio')}}">
-            <img  class="logo" src="{{url_for('static', filename='/images/logo_quinazaur.png')}}" loading="lazy" alt="Logo" title="Inicio">
+            <img  class="logo" src="{{url_for('static', filename='/images/logo_quinazaur.webp')}}" loading="lazy" alt="Logo" title="Inicio">
             </a>
         </div>
         <nav class="links">
-            <button aria-label="Cerrar Menu" class="cerrar-menu"><img src="{{url_for('static',filename='images/cerrar_menu.png')}}" loading="lazy" alt="icon"></button>
+            <button aria-label="Cerrar Menu" class="cerrar-menu"><img src="{{url_for('static',filename='images/cerrar_menu.webp')}}" loading="lazy" alt="icon"></button>
             <a class="section" href="{{url_for('productos')}}">Productos</a>
             <a class="section" href="{{url_for('recetas')}}">Recetario Saludable</a>
             <a class="section" href="{{url_for('compromiso_verde')}}">Compromiso Verde</a>
             {% if "user_id" in session %}
                 <a class="section" href="{{url_for('perfil')}}" title="Mi Perfil">
-                    <img src="{{ url_for('static',filename='images/perfil.png')}}" loading="lazy" alt="icon">
+                    <img src="{{ url_for('static',filename='images/perfil.webp')}}" loading="lazy" alt="icon">
                 </a>
             {% else %}    
                 <a class="btn_inicio" href="{{url_for('login')}}" title="Iniciar Sesion">
@@ -76,7 +76,7 @@
         <section class="info_institucional">
             <div class="card">
                 <div class="card_header">
-                    <img src="{{ url_for('static',filename='images/mision.png')}}" loading="lazy" alt="icon">
+                    <img src="{{ url_for('static',filename='images/mision.webp')}}" loading="lazy" alt="icon">
                     <h3>Misión</h3>
                 </div>
                 <p class="card_cont">
@@ -85,7 +85,7 @@
             </div>
             <div class="card">
                 <div class="card_header">
-                    <img src="{{ url_for('static',filename='images/vision.png')}}" loading="lazy" alt="icon">
+                    <img src="{{ url_for('static',filename='images/vision.webp')}}" loading="lazy" alt="icon">
                     <h3>Visión</h3>
                 </div>
                 <p class="card_cont">
@@ -97,27 +97,27 @@
             <h2>Nuestros Valores</h2>
             <div class="container_valores">
                 <div class="card_valores">
-                    <img src="{{ url_for('static',filename='images/justicia.png')}}" loading="lazy" alt="icon">
+                    <img src="{{ url_for('static',filename='images/justicia.webp')}}" loading="lazy" alt="icon">
                     <h3>Justicia</h3>
                     <p>Respetar y valorar el trabajo al campesino nariñense, sus semillas y el ambiente.</p>
                 </div>
                 <div class="card_valores">
-                    <img src="{{ url_for('static',filename='images/familia.png')}}" loading="lazy" alt="icon">
+                    <img src="{{ url_for('static',filename='images/familia.webp')}}" loading="lazy" alt="icon">
                     <h3>Familia</h3>
                     <p>Somos un equipo que trabaja con amor y lealtad a la empresa y nuestra región.</p>
                 </div>
                 <div class="card_valores">
-                    <img src="{{ url_for('static',filename='images/honradez.png')}}" loading="lazy" alt="icon">
+                    <img src="{{ url_for('static',filename='images/honradez.webp')}}" loading="lazy" alt="icon">
                     <h3>Honradez</h3>
                     <p>Comprometidos en producir y comercializar productos de calidad 100% Nariñenses.</p>
                 </div>
                 <div class="card_valores">
-                    <img src="{{ url_for('static',filename='images/social.png')}}" loading="lazy" alt="icon">
+                    <img src="{{ url_for('static',filename='images/social.webp')}}" loading="lazy" alt="icon">
                     <h3>Responsabilidad Social</h3>
                     <p>Trabajamos unidos por el desarrollo y crecimiento de Nariño de manera sostenible y sustentable.</p>
                 </div>
                 <div class="card_valores">
-                    <img src="{{ url_for('static',filename='images/equipo.png')}}" loading="lazy" alt="icon">
+                    <img src="{{ url_for('static',filename='images/equipo.webp')}}" loading="lazy" alt="icon">
                     <h3>Trabajo en Equipo</h3>
                     <p>Compromiso con la visión y misión institucional, en donde el trabajo en conjunto fortalece y agranda nuestros logros.</p>
                 </div>
@@ -154,7 +154,7 @@
                         </p>
                     </div>    
                 </div>
-                <img  src="{{ url_for('static',filename='images/quinua.jpg')}}" loading="lazy" title="Grano de Quinua" alt="img">
+                <img  src="{{ url_for('static',filename='images/quinua.webp')}}" loading="lazy" title="Grano de Quinua" alt="img">
             </div>
         </section>
         <section class="contacto">

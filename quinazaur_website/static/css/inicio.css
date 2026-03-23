@@ -3,31 +3,31 @@
 @keyframes banner_animado{
     20%{
         background:linear-gradient(#000a, #000c),
-        url(../images/banner1.jpg);
+        url(../images/banner1.webp);
         background-position: center;
         background-size: cover;
     }
     40%{
         background:linear-gradient(#000a, #000c),
-        url(../images/banner2.jpg);
+        url(../images/banner2.webp);
         background-position: bottom;
         background-size: cover;
     }
     60%{
         background:linear-gradient(#000a, #000c),
-        url(../images/banner3.jpg);
+        url(../images/banner3.webp);
         background-position: center;
         background-size: cover; 
     }
     80%{
         background:linear-gradient(#000a, #000c),
-        url(../images/banner4.jpg);
+        url(../images/banner4.webp);
         background-position: top;
         background-size: cover;
     }
     100%{
         background:linear-gradient(#000a, #000c),
-        url(../images/banner5.jpg);
+        url(../images/banner5.webp);
         background-position: center;
         background-size: cover;
         }
@@ -46,7 +46,7 @@ main{
     justify-content: center;
     align-items: center;
     height: 520px;
-    background:linear-gradient(#000a, #000c),url(../images/banner2.jpg);
+    background:linear-gradient(#000a, #000c),url(../images/banner2.webp);
     background-position: top;
     animation: banner_animado 150s infinite;     
 }

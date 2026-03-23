@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Edición de productos">
+    <meta name="robots" content="index, follow">
+
+    <title>Quinazaur</title>
+
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/basics.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/edit_panel.css')}}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400&display=swap" rel="stylesheet">
+    
+</head>
+
+{% set ns = namespace(msg=False, messages=[]) %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% set ns.msg = True %}
+        {% set ns.messages = messages %}
+    {% endif %}
+{% endwith %}
+
+<body class="{{'inactivo' if ns.msg}}">
+    <header class="navbar">
+        <div class="nav-izq">
+            <a href="{{url_for('inicio')}}">
+            <img  class="logo" src="{{url_for('static', filename='/images/logo_quinazaur.webp')}}" loading="lazy" alt="Logo" title="Inicio">
+            </a>
+        </div>
+        <nav class="links">
+            <button class="cerrar-menu" aria-label="Cerrar Menu"><img src="{{url_for('static',filename='images/cerrar_menu.webp')}}" loading="lazy" alt="icon"></button>
+            <a class="section" href="{{url_for('productos')}}">Productos</a>
+            <a class="section" href="{{url_for('recetas')}}">Recetario Saludable</a>
+            <a class="section" href="{{url_for('compromiso_verde')}}">Compromiso Verde</a>
+            <a class="btn_inicio" href="{{url_for('inicio')}}">Inicio</a>
+        </nav>
+        <button class="abrir-menu" title="Menu" aria-label="Abrir Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+    <main>
+
+        {% for category, message in ns.messages %}
+            {% if category=="error" %}
+                <div class="overlay" id="mensaje">
+                    <div  class="mensaje">
+                        <h2>Error</h2>
+                        <p>{{message}}</p>
+                        <a id="cerrar-msg" href="{{url_for('edit_product',id=producto.id_producto)}}" aria-label="Cerrar">Cerrar</a>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <section  class="{% if ns.msg %}inactivo{% else %}edit-product{% endif %}">
+            <div class="edit-panel">
+                <div class="panel-header">
+                    <h1>Edición de Producto</h1>
+                    <p>Completa los campos para actualizar la información del producto</p>
+                </div>
+                <form class="panel-body" action="{{url_for('edit_product',id=producto.id_producto)}}" method="post" id="formulario" enctype="multipart/form-data">
+                        <label class="dato" for="imagen-producto">  Imagen del producto
+                            <label class="input-dato input-img" for="imagen-producto">
+                                Haz click para subir una imagen
+                                <p>PNG, JPG o WEBP(max 5MB)</p>
+                            </label>
+                            <input class="input-dato hide" id="imagen-producto" name="imagen-producto" type="file" accept="image/png, image/jpeg, image/webp" multiple>
+                        </label>
+                        <label class="dato" for="nombre-producto">  Nombre del producto
+                            <input class="input-dato" id="nombre-producto" name="nombre-producto" type="text" placeholder="Escribe aquí..." value="{{producto.nombre_producto}}" maxlength="150" required>
+                        </label>
+                        <label class="dato" for="descripcion_producto">  Descripción del producto
+                            <input class="input-dato" id="descripcion-producto" name="descripcion-producto" type="text" placeholder="Agrega una descripción para el producto ..." value="{{producto.descripcion_producto}}" maxlength="500" required>
+                        </label>
+                        <label class="dato" for="atributo-input">  Atributos del producto
+                            
+                            <div class="container-atributos" id="container-atributos">
+                                {%for a in producto.atributos.split(",")%}
+                                <span class="atributo" id="atributo"> 
+                                    {{a}}
+                                    <button class="eliminar-atributo" type="button">x</button> 
+                                </span>
+                                {% endfor %}
+                            </div>
+                            
+                            <input class="input-dato" id="atributo-input" type="text" placeholder="Escribe atributos especiales (Enter ó , para agregar)" maxlength="50">
+                            
+                            <input type="hidden" id="atributos-hidden" name="atributos" value='{{ producto.atributos }}' required>
+                        </label>
+                        <div class="cont-inputs2">
+                            <label class="dato dato2" for="precio-producto">  Precio unitario
+                                <input class="input-dato" id="precio-producto" name="precio-producto" type="number" placeholder="$" value="{{producto.precio_producto}}" required>
+                            </label>
+                            <label class="dato dato2" for="stock-producto">  Stock disponible
+                                <input class="input-dato" id="stock-producto" name="stock-producto" type="number" placeholder="Unidades" value="{{producto.stock}}" required>
+                            </label>
+                        </div>
+                        <label class="dato" for="disponible">  Estado
+                            <div class="cont-estado" id="cont-estado">
+                                <button class="btn-cambio {% if producto.disponible %}estado-activo{% else %}estado-inactivo{% endif %}" id="btn-cambio" type="button"><span class="marker"></span></button>
+                                <p class="{% if producto.disponible %}dis{% else %}no-dis{% endif %}">{% if producto.disponible %}Disponible{% else %}No disponible{% endif %}</p>
+                            </div>
+                            <input class="input-dato" id="disponible" name="disponible" type="hidden" value="{% if producto.disponible%}1{%else%}0{%endif%}" required>
+                        </label>
+                        
+                        
+                        
+                        <div class="card-footer">
+                            <a class="btn-cancelar" href="{{url_for('productos')}}" aria-label="Cancelar">Cancelar</a>
+                            <button id="btn-enviar-datos" class="btn-guardar-cambios" type="submit" aria-label="Guardar Cambios">Guardar Cambios</button>
+                
+                        </div>
+                    
+                </form>
+            </div>
+        </section>
+    </main>
+    <footer>
+        {% include "info/footer.html" %}
+    </footer>
+</body>
+<script src="{{url_for('static',filename='/js/add_atributo.js')}}"></script>
+<script src="{{url_for('static',filename='/js/menu.js')}}"></script>
+<script src="{{url_for('static',filename='/js/form.js')}}"></script>
+
+
+</html>

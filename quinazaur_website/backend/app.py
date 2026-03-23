@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from bd_postgres import bd_postgres
 import os
 from dotenv import load_dotenv
@@ -6,7 +6,7 @@ from Datos import *
 from Errors import *
 import secrets
 from datetime import datetime, timezone,timedelta 
-
+from werkzeug.utils import secure_filename
 # VARIABLES DE ENTORNO
 load_dotenv()
 h=os.getenv('HOST')
@@ -86,6 +86,8 @@ app.config["SECRET_KEY"]=key
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 app.config["SESSION_COOKIE_SECURE"] = True
+UPLOAD_FOLDER = os.path.join("static", "images")
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 # PAGINA INICIO =============================================================================
 @app.route("/")
@@ -159,10 +161,6 @@ def registro():
     # VERIFICA QUE ESTE HAYA SESION ACTIVA
     if "user_id" in session:
         return redirect(url_for("inicio"))
-    # MUESTRA ERROR
-    error=request.args.get("error")
-    if error:
-        return render_template("formularios/registro.html",error=error)
     
     # RECIBE DATOS    
     if request.method=="POST":
@@ -187,10 +185,10 @@ def registro():
             session["try-verify"]=3
             return redirect (url_for("verify_email",email=user.get_email()))
         # MANDA ERROR
-        except (ErrorRegistro, ErrorLogin) as ex: 
-            return redirect(url_for('registro',error=str(ex)))
+        except (ErrorRegistro, ErrorLogin) as ex:
+            flash(str(ex),"error") 
+            return redirect(url_for('registro'))
     
-    session.clear()
     return  render_template("formularios/registro.html")
 
 
@@ -204,10 +202,7 @@ def verify_email():
     # VERIFICA QUE HAYA UNA SESION DE REGISTRO
     if not "email" in session or not "name" in session or not "password" in session or not "tel" in session:
         return redirect(url_for("registro"))
-    # MUESTRA ERROR
-    error=request.args.get("error")
-    if error:
-        return render_template("formularios/verify_email.html", error=error)
+    
     # VERIFICA QUE TENGA INTENTOS
     if session["try-verify"]!=0:
         if request.method=="POST":
@@ -232,15 +227,18 @@ def verify_email():
                     return redirect(url_for("inicio"))
                 # SI EL CODE NO ES VALIDO DISMINUYE INTENTOS
                 session["try-verify"]-=1
-                return redirect(url_for("verify_email", error="Código incorrecto", email=session["email"]))
+                flash("Código incorrecto","error")
+                return redirect(url_for("verify_email"))
             # SI ENVIA CODIGO VACIO DISMINUYE INTENTOS
             session["try-verify"]-=1
-            return redirect(url_for("verify_email", error="Código incorrecto", email=session["email"]))
-        email=request.args.get("email")
-        return render_template("formularios/verify_email.html",email=email)
+            flash("Código incorrecto","error")
+            return redirect(url_for("verify_email"))
+        
+        return render_template("formularios/verify_email.html")
     # SIN INTENTOS CIERRA SESION Y REDIRIGE
     session.clear()
-    return redirect(url_for("registro", error="Demasiados intentos fallidos"))
+    flash("Demasiados intentos fallidos","error")
+    return redirect(url_for("registro"))
 
 
 
@@ -250,17 +248,9 @@ def verify_email():
 @app.route("/login", methods=["GET","POST"])
 @no_cache
 def login():
-    # VERIFICA QUE ESTE HAYA SESION ACTIVA
+    # VERIFICA QUE HAYA SESION ACTIVA
     if "user_id" in session:
         return redirect(url_for("inicio"))
-    # MUESTRA ERRROR
-    error=request.args.get("error")
-    if error:
-        return render_template("formularios/login.html", error=error)
-    
-    msg=request.args.get("msg")
-    if msg:
-        return render_template("formularios/login.html", msg=msg)
 
     # SI ENVIA EL FORM
     if request.method=="POST":
@@ -276,13 +266,16 @@ def login():
             if valido:
                 db=bd_postgres(h,p,d,u,pw)
                 user_id=db.obtener_id(email)
+                rol=db.get_rol(email)
                 db.disconnect()
                 session.clear()
                 session["user_id"]=user_id
+                session["user_rol"]=rol
                 return redirect(url_for("inicio"))
         # MANDA ERRROR    
         except (ErrorRegistro, ErrorLogin) as ex:
-            return redirect(url_for('login',error=str(ex)))
+            flash(str(ex),"error")
+            return redirect(url_for('login'))
     
     return  render_template("formularios/login.html")    
         
@@ -312,7 +305,6 @@ def editar_perfil():
     db=bd_postgres(h,p,d,u,pw)
     user=db.get_perfil(session["user_id"])
     db.disconnect()
-    error=request.args.get("error")
 
     if request.method=="POST":
         # RECIBE DATOS DEL FORMULARIO
@@ -339,16 +331,15 @@ def editar_perfil():
                     db.actualizar_password(session["user_id"],datos.get_password_nueva())
                     db.disconnect() 
                     return redirect(url_for("logout"))
-                db.disconnect() 
+                db.disconnect()
+                flash("Se ha actualizado su información","aviso") 
                 return redirect(url_for("perfil"))
             db.disconnect() 
         except (ErrorLogin, ErrorRegistro) as ex:
             # MANDA ERRROR
-            return redirect(url_for('editar_perfil', error=str(ex)))
-
-    # MUESTRA ERRROR
-    if error:
-        return render_template("formularios/editar_perfil.html",error=error)
+            flash(str(ex),"error")
+            return redirect(url_for('editar_perfil'))
+    
     return render_template("formularios/editar_perfil.html", user=user)
 
 
@@ -361,10 +352,6 @@ def reset_password():
     if "user_id" in session:
         return redirect(url_for("inicio"))
 
-    error=request.args.get("error")
-    # MUESTRA ERROR
-    if error:
-        return render_template("formularios/reset_password.html" , error=error)
     # SI ENVIA FORMULARIO
     if request.method=="POST":
         # OBTIENE DATOS
@@ -395,8 +382,7 @@ def reset_password():
         # ESTABLECE INTENTOS PARA EL CODIGO
         session["try-code"]=3
         return redirect(url_for("verify_code"))
-    # LIMPIA SESIONES PARA EVITAR QUE ACCEDA DE NUEVO A VERIFICAR CODIGO
-    session.clear()
+    
     return render_template("formularios/reset_password.html")
 
 # FUNCION PARA GENERAR EL CODE DE RECUPERACION
@@ -420,11 +406,6 @@ def verify_code():
     # VERIFICA QUE HAYA UNA SESION DE RECUPERACION DE CODIGO
     if not "id_recuperacion" in session:
         return redirect(url_for("reset_password"))
-    
-    # VERIFICA SI HAY ERROR PARA MOSTRARLO
-    error=request.args.get("error")
-    if error:
-        return render_template("formularios/verify_code.html", error=error)
 
     # VERIFICA QUE TENGA INTENTOS
     if session["try-code"]!=0:
@@ -444,15 +425,18 @@ def verify_code():
                     return redirect(url_for("nueva_contraseña"))
                 # SI EL CODE NO ES VALIDO DISMINUYE INTENTOS
                 session["try-code"]-=1
-                return redirect(url_for("verify_code", error="Código incorrecto"))
+                flash("Código incorrecto","error")
+                return redirect(url_for("verify_code"))
             # SI ENVIA CODIGO VACIO DISMINUYE INTENTOS
             session["try-code"]-=1
-            return redirect(url_for("verify_code", error="Código incorrecto"))
+            flash("Código incorrecto","error")
+            return redirect(url_for("verify_code"))
         
         return render_template("formularios/verify_code.html")
     # SIN INTENTOS CIERRA SESION Y REDIRIGE
     session.clear()
-    return redirect(url_for("reset_password", error="Demasiados intentos fallidos"))
+    flash("Demasiados intentos fallidos","error")
+    return redirect(url_for("reset_password"))
 
 
 
@@ -467,11 +451,6 @@ def nueva_contraseña():
     # VERIFICA QUE HAYA SESION DE RECUPERACION
     if not "id_recuperacion" in session:
         return redirect(url_for("reset_password"))
-    
-    # VERIFICA SI HAY MENSAJE DE ERRROR
-    error=request.args.get("error")
-    if error:
-        return render_template("formularios/new_password.html", error=error)
     
     # VERIFICA QUE TENGA INTENTOS DISPONIBLES
     if session["try-password"]!=0:
@@ -488,17 +467,135 @@ def nueva_contraseña():
                 db.actualizar_password(id,newPassword.get_password_nueva())
                 db.disconnect()
                 session.clear()
-                return redirect (url_for("login", msg="Tu contraseña se ha restablecido correctamente. Ya puedes iniciar sesión con tu nueva contraseña."))
+                flash("Tu contraseña se ha restablecido correctamente. Ya puedes iniciar sesión con tu nueva contraseña.","aviso")
+                return redirect (url_for("login"))
             # MANDA ERROR
             except (ErrorLogin, ErrorRegistro) as ex:
                 # DISMINUYE INTENTOS
                 session["try-password"]-=1
-                return redirect(url_for("nueva_contraseña", error=str(ex)))
+                flash(str(ex),"error")
+                return redirect(url_for("nueva_contraseña"))
         
         return render_template("formularios/new_password.html")
     # SIN INTENTOS, REDIRIGE Y CIERRA SESION DE RECUPERACION
     session.clear()
-    return redirect(url_for("reset_password", error="Demasiados intentos fallidos"))
+    flash("Demasiados intentos fallidos","error")
+    return redirect(url_for("reset_password"))
+
+
+
+# PANEL DE EDICION DE PRODUCTO ===========================================================================================
+
+@app.route("/edit-product/<string:id>", methods=["GET","POST"])
+def edit_product(id):
+    if not "user_id" in session or not session["user_rol"]=="admin":
+        return redirect(url_for("login"))
+    
+    if request.method=="POST":
+        nombre=request.form.get("nombre-producto")
+        descripcion=request.form.get("descripcion-producto")
+        atributos=request.form.get("atributos")
+        precio=request.form.get("precio-producto") 
+        stock=request.form.get("stock-producto")
+        disponible=request.form.get("disponible")
+        print(f"Disponible recibido de html: {disponible}")
+        imagen=request.files["imagen-producto"]
+        if not imagen:
+            filename="none"
+            db=bd_postgres(h,p,d,u,pw)
+            ruta=db.get_ruta(id)
+            db.disconnect()
+            ruta=ruta[0]["imagen_producto"]
+        else:
+            filename=imagen.filename    
+        try:
+            producto=Producto(nombre,descripcion,atributos,precio,stock,disponible,filename)
+            if imagen:
+                nombre = secure_filename(producto.get_name_img())
+                #ruta completa
+                ruta = os.path.join(app.config["UPLOAD_FOLDER"], nombre)
+                #guardar
+                imagen.save(ruta)
+                ruta=producto.get_ruta()
+            db=bd_postgres(h,p,d,u,pw)
+            db.update_product(id,producto.get_nombre(),producto.get_descripción(),producto.get_precio(),ruta,producto.get_disponible(),producto.get_stock())
+            db.update_atributos(id,producto.get_atributos())
+            return redirect(url_for("productos"))
+
+        except (ErrorLogin, ErrorRegistro) as ex:
+            flash(str(ex),"error")  
+            return redirect(url_for("edit_product", id=id))  
+        
+
+    db=bd_postgres(h,p,d,u,pw)
+    producto=db.get_producto(id)
+    db.disconnect()
+    if not producto:
+        return redirect(url_for("productos"))
+    producto=producto[0]
+    atributos=""
+    for a in producto["atributos"]:
+        atributos+=f"{a},"
+    atributos=atributos.strip(",")
+    producto["atributos"]=atributos 
+    return render_template("edicion/editar_producto.html",producto=producto)
+
+
+# AGREGAR PRODUCTO ====================================================================================================
+
+@app.route("/add-product", methods=["GET","POST"])
+def add_product():
+    if not "user_id" in session or not session["user_rol"]=="admin":
+        return redirect(url_for("login"))
+    
+    if request.method=="POST":
+        nombre=request.form.get("nombre-producto")
+        descripcion=request.form.get("descripcion-producto")
+        atributos=request.form.get("atributos")
+        precio=request.form.get("precio-producto") 
+        stock=request.form.get("stock-producto")
+        disponible=request.form.get("disponible")
+        imagen=request.files["imagen-producto"]
+        if not imagen:
+            flash("Seleccione una imagen", "error")
+            return redirect(url_for("add_product"))
+        else:
+            filename=imagen.filename    
+        try:
+            producto=Producto(nombre,descripcion,atributos,precio,stock,disponible,filename)
+            if imagen:
+                nombre = secure_filename(producto.get_name_img())
+                #ruta completa
+                ruta = os.path.join(app.config["UPLOAD_FOLDER"], nombre)
+                #guardar
+                imagen.save(ruta)
+                ruta=producto.get_ruta()
+            db=bd_postgres(h,p,d,u,pw)
+            db.add_product(producto.get_nombre(),producto.get_descripción(),producto.get_precio(),ruta,producto.get_disponible(),producto.get_stock(),producto.get_atributos())
+            return redirect(url_for("productos"))
+
+        except (ErrorLogin, ErrorRegistro) as ex:
+            flash(str(ex),"error")  
+            return redirect(url_for("add_product"))  
+        
+    return render_template("edicion/agregar_producto.html")
+
+
+
+
+
+
+#   ELIMINAR PRODUCTO ===============================================================================================
+
+@app.route("/delete-product/<int:id>", methods=["POST"])
+def delete_product(id):
+    if not "user_id" in session or not session["user_rol"]=="admin":
+        return redirect(url_for("login"))
+    db=bd_postgres(h,p,d,u,pw)
+    db.delete_producto(id)
+    db.disconnect()
+    return redirect(url_for("productos"))
+    
 
 
 

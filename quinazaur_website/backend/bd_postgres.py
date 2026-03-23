@@ -57,11 +57,16 @@ class bd_postgres:
             cursor.close()
             print("Cursor cerrado")
 
+    def get_producto(self, id):
+        query="SELECT p.id_producto, p.nombre_producto, p.descripcion_producto, p.precio_producto, p.stock, p.disponible, p.imagen_producto, ARRAY_AGG(a.nombre_atributo) as atributos FROM productos.productos p LEFT JOIN productos.atributos a ON p.id_producto=a.id_producto WHERE p.id_producto= %s GROUP BY p.id_producto"
+        result=self.execute_query(query, (int(id),), fetch=True)
+        return result  
+    
     def select_productos(self):
         query="SELECT p.id_producto, p.nombre_producto, p.descripcion_producto, p.precio_producto, p.stock, p.disponible, p.imagen_producto, ARRAY_AGG(a.nombre_atributo) as atributos FROM productos.productos p LEFT JOIN productos.atributos a ON p.id_producto=a.id_producto GROUP BY p.id_producto"
         result=self.execute_query(query, fetch=True)
         return result  
-    
+
     def cant_productos(self):
         query="SELECT COUNT(*) AS cantidad FROM productos.productos"
         result=self.execute_query(query, fetch=True)
@@ -147,6 +152,15 @@ class bd_postgres:
             id=None    
         return id
     
+    def get_rol(self, email):
+        query="select u.rol from usuarios.usuario u where u.email = %s"
+        rol=self.execute_query(query, (email,), fetch=True)
+        if rol:
+            rol=rol[0]["rol"]
+        else:
+            rol=None    
+        return rol
+    
 
     def get_perfil(self,id):
         query="select u.nombre, u.email, u.telefono, u.rol from usuarios.usuario u where u.id_usuario= %s"
@@ -231,3 +245,46 @@ class bd_postgres:
             self.execute_query(query2,(email,))
             return True
         return False  
+    
+    def get_ruta(self,id_producto):
+        query="select p.imagen_producto from productos.productos p where p.id_producto= %s"
+        result=self.execute_query(query, (id_producto,), fetch=True)
+        return result
+
+    def update_product(self, id, nombre, descripcion, precio, imagen, disponible, stock):
+        query="update productos.productos p set nombre_producto= %s, descripcion_producto= %s, precio_producto= %s, imagen_producto= %s, disponible= %s, stock= %s where p.id_producto= %s  " 
+        result= self.execute_query(query, (nombre,descripcion,precio,imagen,disponible,stock,id))
+        return result
+    
+    def update_atributos(self, id, newAtributos):
+        drop=[]
+        add=[]
+        producto=self.get_producto(id)
+        producto=producto[0]
+        antAtributos=producto["atributos"]
+        for a in antAtributos:
+            if not a in newAtributos:
+                drop.append(a)
+        for a in newAtributos:
+            if not a in antAtributos:
+                add.append(a)    
+        query1="delete from productos.atributos a where a.nombre_atributo= %s and a.id_producto= %s"
+        query2="insert into productos.atributos (nombre_atributo, id_producto) values (%s, %s)"
+        for a in drop:
+            self.execute_query(query1, (a,id))
+        for a in add:
+            self.execute_query(query2, (a,id))    
+
+    def delete_producto(self,id):
+        query="delete from productos.productos p where p.id_producto= %s"
+        result=self.execute_query(query, (id,))
+        return result    
+
+    def add_product(self, nombre, descripcion, precio, imagen, disponible, stock, atributos):
+        query="insert into productos.productos  (nombre_producto, descripcion_producto, precio_producto, imagen_producto, disponible, stock) values (%s, %s, %s, %s, %s, %s) " 
+        self.execute_query(query, (nombre,descripcion,precio,imagen,disponible,stock))
+        query2="select p.id_producto from productos.productos p where p.nombre_producto= %s"
+        id=self.execute_query(query2, (nombre,), fetch=True)
+        if id:
+            id=id[0]["id_producto"]
+        self.update_atributos(id,atributos)

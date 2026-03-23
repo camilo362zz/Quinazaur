@@ -8,7 +8,7 @@
 
     <meta property="og:title" content="Quinazaur">
     <meta property="og:description" content="Explora nuestros productos">
-    <meta property="og:image" content="{{ url_for('static', filename='images/logo_quinazaur.png') }}">
+    <meta property="og:image" content="{{ url_for('static', filename='images/logo_quinazaur.webp') }}">
     <meta property="og:type" content="website">
 
     <title>Quinazaur</title>
@@ -27,12 +27,16 @@
     <header class="navbar">
         <div class="nav-izq">
             <a href="{{url_for('inicio')}}">
-            <img  class="logo" src="{{url_for('static', filename='/images/logo_quinazaur.png')}}" loading="lazy" alt="Logo" title="Inicio">
+            <img  class="logo" src="{{url_for('static', filename='/images/logo_quinazaur.webp')}}" loading="lazy" alt="Logo" title="Inicio">
             </a>
             <h1 class="titulo">Productos</h1>
+            {% if "user_id" in session and session["user_rol"] == "admin" %}
+                <a class="btn-add" href="{{url_for('add_product')}}" title="Agregar Producto">+</a>
+            {% endif %}
+            
         </div>
         <nav class="links">
-            <button aria-label="Cerrar" class="cerrar-menu"><img src="{{url_for('static',filename='images/cerrar_menu.png')}}" loading="lazy" alt="icon"></button>
+            <button aria-label="Cerrar" class="cerrar-menu"><img src="{{url_for('static',filename='images/cerrar_menu.webp')}}" loading="lazy" alt="icon"></button>
             <a class="section" href="{{url_for('recetas')}}">Recetario Saludable</a>
             <a class="section" href="{{url_for('compromiso_verde')}}">Compromiso Verde</a>
             <a class="btn_inicio" href="{{url_for('inicio')}}">Inicio</a>
@@ -46,7 +50,7 @@
     <main>
         <section class="productos">
             <div class="productos_header">
-                <img src="{{url_for('static',filename='images/lista_icon.png')}}" loading="lazy" alt="icon">
+                <img src="{{url_for('static',filename='images/lista_icon.webp')}}" loading="lazy" alt="icon">
                 {% for total in cantidad %} 
                     <p>Mostrando {{total.cantidad}} producto(s)</p>
                 {% endfor %}  
@@ -76,6 +80,20 @@
                         </div>
                     </div>
                 </div> 
+
+                {% if session["user_rol"] == "admin" %}
+                <div class="modal-container" id="confirmacion">
+                    <form  class="mensaje" method="post">
+                        <h2>Confirmación</h2>
+                        <p>¿Seguro que desea eliminar este producto?</p>
+                        <div class="mensaje-buttons">
+                            <button class="btn-eliminar">Eliminar</button>
+                            <a class="btn-cancelar" id="cancelar" aria-label="Cancelar">Cancelar</a>
+                        </div>    
+                    </form>
+                </div> 
+                {% endif%}
+
                 {% for producto in productos%}   
                     <div class="card_productos">
                         <img src="{{url_for('static',filename=producto.imagen_producto)}}" alt="{{producto.nombre_producto}}">
@@ -88,9 +106,20 @@
                                 <h3>{{atributo}}</h3>   
                             {% endfor %}        
                         </div>
+                        
                         <div class="footer_card">
                             <p class="precio">${{"{:,.0f}".format(producto.precio_producto).replace(",",".")}}</p>
-                            <button class="btn_vermas" data-nombre="{{producto.nombre_producto}}" data-descripcion="{{producto.descripcion_producto}}" data-atributos='{{ producto.atributos | tojson }}' data-precio="{{producto.precio_producto}}" data-img="{{url_for('static',filename=producto.imagen_producto)}}">Ver Más >></button>
+                            {% if session["user_rol"]=="admin" %}
+                                <div class="cont-edit-buttons">
+                                    <button class="drop-button" title="Eliminar" data-id="{{producto.id_producto}}"><img src="{{url_for('static', filename='images/drop_button.svg')}}" alt="Eliminar" loading="lazy"></button>
+                                    <a href="{{url_for('edit_product', id=producto.id_producto)}}">
+                                    <button class="edit-button" title="Editar"><img src="{{url_for('static', filename='images/edit_button.svg')}}" alt="Editar" loading="lazy"></button>
+                                    </a>
+                                    <button class="btn_vermas" data-nombre="{{producto.nombre_producto}}" data-descripcion="{{producto.descripcion_producto}}" data-atributos='{{ producto.atributos | tojson }}' data-precio="{{producto.precio_producto}}" data-img="{{url_for('static',filename=producto.imagen_producto)}}">Ver Más >></button>
+                                </div>
+                            {% else %}    
+                                <button class="btn_vermas" data-nombre="{{producto.nombre_producto}}" data-descripcion="{{producto.descripcion_producto}}" data-atributos='{{ producto.atributos | tojson }}' data-precio="{{producto.precio_producto}}" data-img="{{url_for('static',filename=producto.imagen_producto)}}">Ver Más >></button>
+                            {% endif %}
                         </div>
                     </div>
                 {% endfor %}

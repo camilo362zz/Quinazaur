@@ -26,12 +26,12 @@
     <header class="navbar">
         <div class="nav-izq">
             <a href="{{url_for('inicio')}}">
-            <img  class="logo" src="{{url_for('static', filename='/images/logo_quinazaur.png')}}" loading="lazy" alt="Logo" title="Inicio">
+            <img  class="logo" src="{{url_for('static', filename='/images/logo_quinazaur.webp')}}" loading="lazy" alt="Logo" title="Inicio">
             </a>
             <h1 class="titulo">Recetario Saludable</h1>
         </div>
         <nav class="links">
-            <button class="cerrar-menu" aria-label="Cerrar"><img src="{{url_for('static',filename='images/cerrar_menu.png')}}" loading="lazy" alt="icon"></button>
+            <button class="cerrar-menu" aria-label="Cerrar"><img src="{{url_for('static',filename='images/cerrar_menu.webp')}}" loading="lazy" alt="icon"></button>
             <a class="section" href="{{url_for('productos')}}">Productos</a>
             <a class="section" href="{{url_for('compromiso_verde')}}">Compromiso Verde</a>
             <a class="btn_inicio" href="{{url_for('inicio')}}">Inicio</a>
@@ -44,7 +44,7 @@
     </header>
     <main>
         <section class="encabezado">
-            <img class="img1" src="{{url_for('static', filename='/images/planta_quinua1.png')}}" title="Planta de Quinua" alt="quinua.img" loading="lazy">
+            <img class="img1" src="{{url_for('static', filename='/images/planta_quinua1.webp')}}" title="Planta de Quinua" alt="quinua.img" loading="lazy">
             <div class="texto">
                 <h2>Descubre el sabor de lo <br>natural con la quinua <br>nariñense</h2>
                 <p>Cada plato preparado con productos Quinazaur no solo <br>nutre tu cuerpo, sino que impulsa el bienestar de las <br>familias campesinas que hacen posible estos sabores.</p>
@@ -54,14 +54,14 @@
             <form class="buscar" action="{{url_for('recetas')}}" method="get">
                 <input type="text" placeholder="Busca tus recetas aquí" name="search">
                 <button class="btn-buscar" type="submit" title="Buscar">
-                    <img class="buscar-icon" src="{{url_for('static', filename='/images/lupa.png')}}" loading="lazy" alt="icon">
+                    <img class="buscar-icon" src="{{url_for('static', filename='/images/lupa.webp')}}" loading="lazy" alt="icon">
                 </button>
             </form>
         </section>
         <section class="recetas">
             {% if not recetas %}
                 <div class="no_result">
-                    <img src="{{url_for('static',filename='images/no_result.png')}}" class="img_noresult" loading="lazy" alt="icon">
+                    <img src="{{url_for('static',filename='images/no_result.webp')}}" class="img_noresult" loading="lazy" alt="icon">
                     <p class="msg_noresult" >Lo sentimos, no hemos encontrado ninguna receta. <a href="{{url_for('recetas')}}">Volver</a></p>
                 </div>    
             {% else %}
