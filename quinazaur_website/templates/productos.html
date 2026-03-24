@@ -96,7 +96,7 @@
 
                 {% for producto in productos%}   
                     <div class="card_productos">
-                        <img src="{{url_for('static',filename=producto.imagen_producto)}}" alt="{{producto.nombre_producto}}">
+                        <img src="{{producto.imagen_producto}}" alt="{{producto.nombre_producto}}">
                         <div class="descripcion_producto">
                             <h2>{{producto.nombre_producto}}</h2>
                             <p>{{producto.descripcion_producto}}</p>
@@ -118,14 +118,12 @@
                                     <a href="{{url_for('edit_product', id=producto.id_producto)}}">
                                     <button class="edit-button" title="Editar"><img src="{{url_for('static', filename='images/edit_button.svg')}}" alt="Editar" loading="lazy"></button>
                                     </a>
-                                    {% if producto.stock == 0 %}
-                                        <p class="agotado">Agotado</p>
-                                    {% else %}
-                                        <button class="btn_vermas" data-nombre="{{producto.nombre_producto}}" data-descripcion="{{producto.descripcion_producto}}" data-atributos='{{ producto.atributos | tojson }}' data-precio="{{producto.precio_producto}}" data-img="{{url_for('static',filename=producto.imagen_producto)}}">Ver Más >></button>
-                                    {% endif %}
-                                    </div>
-                            {% else %}    
-                                <button class="btn_vermas" data-nombre="{{producto.nombre_producto}}" data-descripcion="{{producto.descripcion_producto}}" data-atributos='{{ producto.atributos | tojson }}' data-precio="{{producto.precio_producto}}" data-img="{{url_for('static',filename=producto.imagen_producto)}}">Ver Más >></button>
+                                </div>
+                            {% endif %}
+                            {% if producto.stock == 0 %}
+                                <p class="agotado">Agotado</p>
+                            {% else %}
+                                <button class="btn_vermas" data-nombre="{{producto.nombre_producto}}" data-descripcion="{{producto.descripcion_producto}}" data-atributos='{{ producto.atributos | tojson }}' data-precio="{{producto.precio_producto}}" data-img="{{producto.imagen_producto}}">Ver Más >></button>
                             {% endif %}
                         </div>
                     </div>

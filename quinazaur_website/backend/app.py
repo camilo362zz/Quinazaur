@@ -7,6 +7,7 @@ from Errors import *
 import secrets
 from datetime import datetime, timezone,timedelta 
 from werkzeug.utils import secure_filename
+import cloudinary, cloudinary.utils, cloudinary.uploader
 # VARIABLES DE ENTORNO
 load_dotenv()
 h=os.getenv('HOST')
@@ -16,6 +17,9 @@ u=os.getenv('USER_DB')
 pw=os.getenv('PASSWORD_DB')
 key=os.getenv('SECRET_KEY')
 sendgridKey=os.getenv('SENDGRID_API_KEY')
+cloudinaryName=os.getenv('CLOUDINARY_NAME')
+cloudinaryID=os.getenv('CLOUDINARY_API_ID')
+cloudinaryKey=os.getenv('CLOUDINARY_API_KEY')
 
 # API PARA ENVIAR EMAILS DE VERIFICACION ====================================================================================
 from sendgrid import SendGridAPIClient
@@ -61,6 +65,35 @@ def correo_verificacion(email,nombre,code,min):
         print(e.message)
 
 
+# FUNCION PARA GUARDAR IMAGEN EN CLOUDINARY =========================================================================================
+def upload_img(file, name_img):
+    cloudinary.config(
+    cloud_name=cloudinaryName,
+    api_key=cloudinaryID,
+    api_secret=cloudinaryKey
+    )
+    result = cloudinary.uploader.upload(file ,public_id=name_img)
+    public_id = result["public_id"]
+    version=result["version"]
+    url, _ = cloudinary.utils.cloudinary_url(
+    public_id,
+    version=version,
+    secure=True,
+    fetch_format="auto",
+    quality="auto",
+    crop="fill")
+    return url 
+
+def delete_img(id_img):
+    cloudinary.config(
+    cloud_name=cloudinaryName,
+    api_key=cloudinaryID,
+    api_secret=cloudinaryKey
+    )
+    cloudinary.uploader.destroy(
+    id_img,
+    invalidate=True
+)
 
 
 # FUNCION PARA NO GUARDAR CACHE ====================================================================================
@@ -86,8 +119,8 @@ app.config["SECRET_KEY"]=key
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 app.config["SESSION_COOKIE_SECURE"] = True
-UPLOAD_FOLDER = os.path.join("static", "images")
-app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+ALLOWED_MIME_TYPES = {'image/png', 'image/jpeg', 'image/webp'}
 
 # PAGINA INICIO =============================================================================
 @app.route("/")
@@ -504,31 +537,45 @@ def edit_product(id):
         precio=request.form.get("precio-producto") 
         stock=request.form.get("stock-producto")
         disponible=request.form.get("disponible")
-        print(f"Disponible recibido de html: {disponible}")
         imagen=request.files["imagen-producto"]
+
+        db=bd_postgres(h,p,d,u,pw)
+        ruta=db.get_ruta(id)
+        db.disconnect()
+        
         if not imagen:
             filename="none"
-            db=bd_postgres(h,p,d,u,pw)
-            ruta=db.get_ruta(id)
-            db.disconnect()
             ruta=ruta[0]["imagen_producto"]
         else:
-            filename=imagen.filename    
+            filename=imagen.filename   
         try:
             producto=Producto(nombre,descripcion,atributos,precio,stock,disponible,filename)
             if imagen:
-                nombre = secure_filename(producto.get_name_img())
-                #ruta completa
-                ruta = os.path.join(app.config["UPLOAD_FOLDER"], nombre)
-                #guardar
-                imagen.save(ruta)
-                ruta=producto.get_ruta()
+                # VERIFICA QUE SEA DEL FORMATO ADECUADO
+                if imagen.mimetype not in ALLOWED_MIME_TYPES:
+                    flash(f"Archivo {imagen.mimetype} no permitido", "error")
+                    return redirect(url_for("add_product"))
+                # VERIFICA EL TAMAÑO DEL ARCHIVO
+                imagen.seek(0, 2)  # ir al final del archivo
+                tamaño = imagen.tell()  # obtener tamaño en bytes
+                imagen.seek(0)  # volver al inicio
+                if tamaño > 5 * 1024 * 1024:
+                    flash(f"La imagen supera los 5 MB", "error")
+                    return redirect(url_for("add_product"))
+                # SI LA IMAGEN ES ADECUADA, LA GUARDA
+                # OBTIENE EL ID_PUBLIC DE LA IMAGEN ( SE DEBE MEJORAR EN CASO DE QUE SE CREEN CARPETAS)
+                id_img=ruta[0]["imagen_producto"]
+                id_img=id_img.split("/")
+                id_img=id_img[len(id_img)-1]
+                # ACTUALIZA
+                ruta=upload_img(imagen,id_img)
+
             db=bd_postgres(h,p,d,u,pw)
             db.update_product(id,producto.get_nombre(),producto.get_descripción(),producto.get_precio(),ruta,producto.get_disponible(),producto.get_stock())
             db.update_atributos(id,producto.get_atributos())
             db.disconnect()
             return redirect(url_for("productos"))
-
+            
         except (ErrorLogin, ErrorRegistro) as ex:
             flash(str(ex),"error")  
             return redirect(url_for("edit_product", id=id))  
@@ -571,16 +618,26 @@ def add_product():
         try:
             producto=Producto(nombre,descripcion,atributos,precio,stock,disponible,filename)
             if imagen:
-                nombre = secure_filename(producto.get_name_img())
-                #ruta completa
-                ruta = os.path.join(app.config["UPLOAD_FOLDER"], nombre)
-                #guardar
-                imagen.save(ruta)
-                ruta=producto.get_ruta()
-            db=bd_postgres(h,p,d,u,pw)
-            db.add_product(producto.get_nombre(),producto.get_descripción(),producto.get_precio(),ruta,producto.get_disponible(),producto.get_stock(),producto.get_atributos())
-            db.disconnect()
-            return redirect(url_for("productos"))
+                # VERIFICA QUE SEA DEL FORMATO ADECUADO
+                if imagen.mimetype not in ALLOWED_MIME_TYPES:
+                    flash(f"Archivo {imagen.mimetype} no permitido", "error")
+                    return redirect(url_for("add_product"))
+                # VERIFICA EL TAMAÑO DEL ARCHIVO
+                imagen.seek(0, 2)  # ir al final del archivo
+                tamaño = imagen.tell()  # obtener tamaño en bytes
+                imagen.seek(0)  # volver al inicio
+                if tamaño > 5 * 1024 * 1024:
+                    flash("La imagen supera los 5 MB", "error")
+                    return redirect(url_for("add_product"))
+                # AGREGA IMAGEN
+                name_img = secure_filename(producto.get_name_img())
+                ruta=upload_img(imagen,name_img)
+                db=bd_postgres(h,p,d,u,pw)
+                db.add_product(producto.get_nombre(),producto.get_descripción(),producto.get_precio(),ruta,producto.get_disponible(),producto.get_stock(),producto.get_atributos())
+                db.disconnect()
+                return redirect(url_for("productos"))
+            flash("Ocurrió un error, intenta de nuevo", "error")
+            return redirect(url_for("add_product"))
 
         except (ErrorLogin, ErrorRegistro) as ex:
             flash(str(ex),"error")  
@@ -610,8 +667,13 @@ def delete_product(id):
     if not "user_id" in session or not session["user_rol"]=="admin":
         return redirect(url_for("login"))
     db=bd_postgres(h,p,d,u,pw)
+    ruta=db.get_ruta(id)
     db.delete_producto(id)
     db.disconnect()
+    id_img=ruta[0]["imagen_producto"]
+    id_img=id_img.split("/")
+    id_img=id_img[len(id_img)-1]
+    delete_img(id_img)
     return redirect(url_for("productos"))
     
 
@@ -629,4 +691,3 @@ def logout():
 # EJECUTA APP =============================================================================
 if __name__=="__main__":
     app.run()
-    

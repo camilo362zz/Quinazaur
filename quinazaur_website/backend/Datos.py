@@ -311,7 +311,7 @@ class Producto:
         self.set_precio(precio)
         self.set_stock(stock)
         self.set_disponible(disponible)
-        self.set_imagen(imagen)
+        self.set_imagen(imagen,nombre)
 
 
     def set_nombre(self,nombre):
@@ -394,16 +394,15 @@ class Producto:
         if disponible==0:
             self.__disponible=False        
 
-    def set_imagen(self,ruta):
+    def set_imagen(self,ruta, name):
 
         if ruta=="none":
             return
-
+        n=name.strip()
         r=ruta.strip()
         if len(r)==0:
-            raise ErrorRegistro("No hay ningún archivo")
-        if len(r)>50:
-            raise ErrorRegistro("El nombre del archivo es demasiado largo")
+            raise ErrorRegistro("El nombre del archivo no puede estar vacío")
+        
         if not r.endswith(".jpg") and not r.endswith(".png") and not r.endswith(".webp") and not r.endswith(".jpeg"):
             raise ErrorRegistro("Formato de archivo no válido")
         
@@ -412,8 +411,9 @@ class Producto:
         id=""
         for i in range(3):
             id+=str(digits[randint(0,9)])
-        r=r.replace(" ","_")
-        self.__name_img=id+r   
+        n=n.replace(" ","_")
+        id+="_"
+        self.__name_img=id+n  
         newRuta+=(id+r) 
 
         self.__ruta=newRuta
@@ -440,5 +440,4 @@ class Producto:
         return self.__ruta
     
     def get_name_img(self):
-        return self.__name_img
-    
+        return self.__name_img  

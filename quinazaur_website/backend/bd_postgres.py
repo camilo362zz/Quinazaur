@@ -135,8 +135,7 @@ class bd_postgres:
     def agregar_usuario(self,nombre,email,telefono,password):
         if self.verificar_user(email,telefono):
             query="insert  into usuarios.usuario (nombre, email, telefono, password) values (%s,%s,%s,%s)"
-            self.execute_query(query,(nombre,email,telefono,password))
-            print("Usuario registrado") 
+            self.execute_query(query,(nombre,email,telefono,password)) 
         else:
             return   
 
