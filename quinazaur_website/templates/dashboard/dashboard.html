@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Resumen del Sitio">
+    <meta name="robots" content="noindex, nofollow">
+
+    <title>Quinazaur</title>
+    
+    <link rel="stylesheet" href="{{url_for('static', filename='css/basics.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/dashboard.css')}}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400&display=swap" rel="stylesheet">
+    
+
+    
+</head>
+<body>
+    <header class="navbar">
+        <div class="nav-izq">
+            <a href="{{url_for('inicio')}}">
+            <img  class="logo" src="{{url_for('static', filename='/images/logo_quinazaur.webp')}}" loading="lazy" alt="Logo" title="Inicio">
+            </a>
+            <h1 class="titulo">Resumen</h1>
+        </div>
+        <nav class="links">
+            <button class="cerrar-menu"><img src="{{url_for('static',filename='images/cerrar_menu.webp')}}" loading="lazy" alt="icon"></button>
+            <a class="btn_inicio" href="{{url_for('inicio')}}">Inicio</a>
+        </nav>
+        <button class="abrir-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+    <main>
+        <nav class="navbar-2">
+            <button class="section-2 activo" id="usuarios"><img src="{{url_for('static', filename='/images/usuarios.svg')}}" alt="icon">Usuarios<p>({{datos[3]}})</p></button>
+            <button class="section-2" id="productos"><img src="{{url_for('static', filename='/images/productos.svg')}}" alt="icon">Productos<p>({{datos[4]}})</p></button>
+            <button class="section-2" id="recetas"><img src="{{url_for('static', filename='/images/recetas.svg')}}" alt="icon">Recetas<p>({{datos[5]}})</p></button>
+        </nav>
+        
+        <div class="content">
+                {% include "dashboard/usuarios.html"%}
+                {% include "dashboard/productos.html"%}
+                {% include "dashboard/recetas.html" %}
+        </div>
+    </main>
+    <footer>
+        {% include "info/footer.html" %}
+    </footer>
+<script src="{{url_for('static',filename='/js/menu.js')}}"></script>
+<script src="{{url_for('static',filename='/js/estadisticas.js')}}"></script>
+
+</body>
+</html>

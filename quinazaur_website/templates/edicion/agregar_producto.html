@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Edición de productos">
-    <meta name="robots" content="index, follow">
+    <meta name="description" content="Agrega un producto nuevo">
+    <meta name="robots" content="noindex, nofollow">
 
     <title>Quinazaur</title>
 
@@ -80,17 +80,19 @@
                             <input class="input-dato" id="nombre-producto" name="nombre-producto" type="text" placeholder="Escribe aquí..." maxlength="150" required>
                         </label>
                         <label class="dato" for="descripcion_producto">  Descripción del producto
-                            <input class="input-dato" id="descripcion-producto" name="descripcion-producto" type="text" placeholder="Agrega una descripción para el producto ..."  maxlength="500" required>
+                            <textarea class="input-dato" id="descripcion-producto" name="descripcion-producto" type="text" placeholder="Agrega una descripción para el producto ..."  maxlength="500" required></textarea>
                         </label>
                         <label class="dato" for="atributo-input">  Atributos del producto
                             
                             <div class="container-atributos" id="container-atributos">
                                 
                             </div>
-                            
-                            <input class="input-dato" id="atributo-input" type="text" placeholder="Escribe atributos especiales (Enter ó , para agregar)" maxlength="50">
-                            
+                            <div class="agregar-atributos">
+                                <input class="input-dato" id="atributo-input" type="text" placeholder="Ej: Natural, Sin Glúten ... ( Presiona enter para agregar )" maxlength="50">
+                                <button class="btn-agregar-atributo" id="btn-agregar-atributo" type="button">+</button>
+                            </div>
                             <input type="hidden" id="atributos-hidden" name="atributos"  required>
+                            
                         </label>
                         <div class="cont-inputs2">
                             <label class="dato dato2" for="precio-producto">  Precio unitario
@@ -124,9 +126,9 @@
         {% include "info/footer.html" %}
     </footer>
 </body>
-<script src="{{url_for('static',filename='/js/add_atributo.js')}}"></script>
-<script src="{{url_for('static',filename='/js/menu.js')}}"></script>
-<script src="{{url_for('static',filename='/js/form.js')}}"></script>
+<script src="{{url_for('static',filename='js/add_atributo.js')}}"></script>
+<script src="{{url_for('static',filename='js/menu.js')}}"></script>
+<script src="{{url_for('static',filename='js/form.js')}}"></script>
 
 
 </html>

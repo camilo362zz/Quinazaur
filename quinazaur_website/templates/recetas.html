@@ -32,6 +32,11 @@
         </div>
         <nav class="links">
             <button class="cerrar-menu" aria-label="Cerrar"><img src="{{url_for('static',filename='images/cerrar_menu.webp')}}" loading="lazy" alt="icon"></button>
+            
+            {% if session["user_rol"]=="admin" %}
+                <a class="editar-modulo" title="Disponible Pronto">Editar Módulo</a>
+            {% endif %}
+
             <a class="section" href="{{url_for('productos')}}">Productos</a>
             <a class="section" href="{{url_for('compromiso_verde')}}">Compromiso Verde</a>
             <a class="btn_inicio" href="{{url_for('inicio')}}">Inicio</a>

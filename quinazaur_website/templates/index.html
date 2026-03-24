@@ -38,9 +38,18 @@
         </div>
         <nav class="links">
             <button aria-label="Cerrar Menu" class="cerrar-menu"><img src="{{url_for('static',filename='images/cerrar_menu.webp')}}" loading="lazy" alt="icon"></button>
+            {% if session["user_rol"]=="admin" %}
+                <a class="editar-modulo" title="Disponible Pronto">Editar Módulo</a>
+            {% endif %}
+
             <a class="section" href="{{url_for('productos')}}">Productos</a>
             <a class="section" href="{{url_for('recetas')}}">Recetario Saludable</a>
             <a class="section" href="{{url_for('compromiso_verde')}}">Compromiso Verde</a>
+            {% if session["user_rol"]=="admin" %}
+                <a class="section" href="{{url_for('estadisticas')}}" title="Resumen">
+                    <img src="{{ url_for('static',filename='images/estadisticas.svg')}}" loading="lazy" alt="icon">
+                </a>
+            {% endif %}
             {% if "user_id" in session %}
                 <a class="section" href="{{url_for('perfil')}}" title="Mi Perfil">
                     <img src="{{ url_for('static',filename='images/perfil.webp')}}" loading="lazy" alt="icon">

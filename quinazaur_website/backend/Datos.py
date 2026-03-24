@@ -49,7 +49,7 @@ class Usuario:
         if len(e)>50:
             raise ErrorRegistro("Correo muy largo")
         
-        if not e.endswith(".com") or not "@" in e:
+        if not (e.endswith(".com") or e.endswith(".co")) or not "@" in e:
             raise ErrorRegistro("Formato de correo incorrecto")
         
         self.__email=e
@@ -132,7 +132,7 @@ class Login:
         if len(e)>50:
             raise ErrorLogin(msg)
         
-        if not e.endswith(".com") or not "@" in e:
+        if not (e.endswith(".com") or e.endswith(".co")) or not "@" in e:
             raise ErrorLogin(msg)
         
         self.__email=e

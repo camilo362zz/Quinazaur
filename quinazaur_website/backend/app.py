@@ -99,8 +99,14 @@ def inicio():
 @app.route("/productos")
 def productos():
     db=bd_postgres(h,p,d,u,pw)
+    if "user_id" in session:
+        if session["user_rol"] == "admin":
+            productos=db.select_productos_admin()
+            cant_prod=db.cant_productos_admin()
+            db.disconnect()
+            return render_template("productos.html",productos=productos, cantidad=cant_prod)
     productos=db.select_productos()
-    cant_prod=db.cant_productos()
+    cant_prod=db.cant_productos() 
     db.disconnect()
     return render_template("productos.html",productos=productos, cantidad=cant_prod)
 
@@ -520,6 +526,7 @@ def edit_product(id):
             db=bd_postgres(h,p,d,u,pw)
             db.update_product(id,producto.get_nombre(),producto.get_descripción(),producto.get_precio(),ruta,producto.get_disponible(),producto.get_stock())
             db.update_atributos(id,producto.get_atributos())
+            db.disconnect()
             return redirect(url_for("productos"))
 
         except (ErrorLogin, ErrorRegistro) as ex:
@@ -572,6 +579,7 @@ def add_product():
                 ruta=producto.get_ruta()
             db=bd_postgres(h,p,d,u,pw)
             db.add_product(producto.get_nombre(),producto.get_descripción(),producto.get_precio(),ruta,producto.get_disponible(),producto.get_stock(),producto.get_atributos())
+            db.disconnect()
             return redirect(url_for("productos"))
 
         except (ErrorLogin, ErrorRegistro) as ex:
@@ -581,7 +589,17 @@ def add_product():
     return render_template("edicion/agregar_producto.html")
 
 
+# ESTADÍSITCAS ======================================================================================================
+@app.route("/resumen")
+def estadisticas():
 
+    if not "user_id" in session or not session["user_rol"]=="admin":
+        return redirect(url_for("login"))
+
+    db=bd_postgres(h,p,d,u,pw)
+    datos=db.get_estadisticas()
+    db.disconnect()
+    return render_template("/dashboard/dashboard.html",datos=datos)
 
 
 
@@ -598,7 +616,6 @@ def delete_product(id):
     
 
 
-
 # CERRAR SESION =============================================================================
 @app.route("/logout")
 def logout():
@@ -607,7 +624,6 @@ def logout():
         return redirect(url_for("login"))
     else:
         return redirect(url_for("inicio")) 
-
 
 
 # EJECUTA APP =============================================================================

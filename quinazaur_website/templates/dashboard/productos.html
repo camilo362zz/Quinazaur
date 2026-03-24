@@ -1,0 +1,14 @@
+<section class="productos">
+    <h2 class="titulo-datos">Hasta el momento, se han agregado {{datos[3]}} productos en la plataforma.</h2>
+    <div class="container-datos">
+        {% for producto in datos[1] %}
+        <div class="card">
+            <img class="foto" src="{{url_for('static', filename='/images/producto.svg')}}" alt="icon">
+            <div class="datos">
+                <h3>{{producto.nombre_producto}}</h3>
+                <p class="estado-producto {% if producto.disponible %} disponible {% else %} no-disponible {% endif %}">{% if producto.disponible %} Activo {% else %} Inactivo {% endif %}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>

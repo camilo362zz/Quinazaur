@@ -1,0 +1,217 @@
+
+/*============ANIMACIONES==============*/
+@keyframes slide1{
+    from{
+        opacity: 0;
+        transform: translatey(50px);
+    }
+
+    to{
+        opacity: 1;
+        transform: translatey(0px);
+    }
+}
+
+@keyframes slide2{
+    from{
+        opacity: 0;
+        transform: translatey(-15px);
+    }
+
+    to{
+        opacity: 1;
+        transform: translatey(0px);
+    }
+}
+
+@keyframes fade{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+/*==============================*/
+
+body{
+    background:#FAF9F6;
+}
+@media (max-width:450px) {
+    .titulo{
+    font-size: 1.15rem;
+    }
+}
+
+main{
+    gap: 2rem;
+    padding-bottom: 3rem;
+    min-height: 80vh;
+    justify-content: start;
+}
+
+.titulo{
+    font-size: 1.2rem;
+    color: #4E944F;
+    font-family: "Poppins";
+    font-weight: 500;
+}
+
+
+.navbar-2{
+    background-color: transparent;
+    display: flex;
+    gap: clamp(0.8rem, 1%, 1.3rem);
+    padding: clamp(10px,4vh,15px) clamp(10px,5vw,40px);
+    width: 95%;
+    margin-top: 1rem;
+    align-items: center;
+    justify-content: left;
+    
+}
+
+.section-2{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+    text-decoration:none;
+    text-align: center;
+    color: #6B4F2A;
+    font-family: "Plus Jakarta Sans";
+    font-size: clamp(0.5rem,3.8vw,0.9rem);
+    transition: transform 0.25s ease-in-out;
+    background: #fff;
+    border: 1px solid #DAD7CD;
+    border-radius: 15px;
+    padding: 0.8rem 0.6rem;
+}
+.section-2 img{
+    width: 1.3rem;
+}
+.section-2:hover{
+    color: #43331c;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+.section-2:active{
+    transform: scale(0.9);
+}
+
+.activo{
+    color: #4E944F;
+    border-bottom: 2px solid rgba(72, 136, 73, 0.4);
+    border-right: 2px solid rgba(72, 136, 73, 0.4);
+    animation: slide2 0.25s ease-in-out;
+}
+
+.content{
+    display: flex;
+    gap: 25px;
+    flex-direction: column;
+    width: 90%;
+    justify-content: center;
+    align-items: center;
+}
+
+.productos, .usuarios, .recetas{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    display: none;
+}
+
+.titulo-datos{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: "Nunito";
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #6B4F2A;
+    background-color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 15px;
+    border: 1px solid #DAD7CD;
+}
+
+
+.container-datos{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: stretch;
+    margin-top: 1.5rem;
+}
+
+
+.card{
+    display: flex;
+    gap: 1rem;
+    background: #fff;
+    padding: 0.8rem;
+    border-radius: 18px;
+    border: 1px solid #DAD7CD;
+    flex: 0 1 300px;
+}
+
+.foto{
+    width: 2.5rem;
+}
+
+.datos{
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    justify-content: center;
+}
+
+.datos h3{
+    font-family: "Poppins";
+    font-size: 0.8rem;
+    color: #6B4F2A;
+    font-weight: 500;
+}
+.datos p{
+    font-family: "Nunito";
+    font-size: 0.8rem;
+    color: #6B4F2A;
+}
+
+.datos >.rol-usuario{
+    color: #fff;
+    background: #6B4F2A;
+    padding: 0 0.4rem;
+    width: fit-content;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    margin-top: 0.2rem;
+}
+
+.estado-producto{
+    padding: 0 0.4rem;
+    width: fit-content;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    margin-top: 0.2rem;
+}
+.datos >.disponible{
+    background: #B9F8CF;
+    color: #016630;
+}
+.datos >.no-disponible{
+    background: #D24A4D12;
+    color: #D4183D;
+}
+
+.mostrar{
+    display: flex;
+    animation: slide1 0.25s ease-in-out;
+}

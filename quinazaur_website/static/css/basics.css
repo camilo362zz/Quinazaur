@@ -117,6 +117,25 @@ footer img{
     filter:brightness(0)
 }
 
+
+.editar-modulo{
+    text-decoration:none;
+    text-align: center;
+    color: #E20104;
+    font-family: "Plus Jakarta Sans";
+    font-size: 0.7rem;
+    transition: transform 0.25s ease-in-out;
+}
+.editar-modulo:hover{
+    color: #800f11;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+.editar-modulo:active{
+    transform: scale(0.9);
+}
+
+
 .btn_inicio{
     text-decoration:none;
     text-align: center;
@@ -197,7 +216,7 @@ footer img{
     display: block;
 }
 
-@media (max-width:810px) {
+@media (max-width:890px) {
     .section img{
     filter:brightness(0); 
     }
@@ -216,6 +235,12 @@ footer img{
     }
     .btn_inicio{
         margin-top: 15px;
+    }
+    .cerrar-menu{
+        margin-bottom: 15px;
+    }
+    .editar-modulo{
+        font-size: clamp(0.5rem,4vw,0.8rem);
     }
 }
 

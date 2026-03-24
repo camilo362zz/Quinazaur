@@ -104,7 +104,10 @@
                         <div class="tags_container">
                             {% for atributo in producto.atributos %}
                                 <h3>{{atributo}}</h3>   
-                            {% endfor %}        
+                            {% endfor %}
+                            {% if not producto.disponible%}
+                            <h3 class="tag-inactivo">Inactivo</h3>
+                            {% endif %}        
                         </div>
                         
                         <div class="footer_card">
@@ -115,8 +118,12 @@
                                     <a href="{{url_for('edit_product', id=producto.id_producto)}}">
                                     <button class="edit-button" title="Editar"><img src="{{url_for('static', filename='images/edit_button.svg')}}" alt="Editar" loading="lazy"></button>
                                     </a>
-                                    <button class="btn_vermas" data-nombre="{{producto.nombre_producto}}" data-descripcion="{{producto.descripcion_producto}}" data-atributos='{{ producto.atributos | tojson }}' data-precio="{{producto.precio_producto}}" data-img="{{url_for('static',filename=producto.imagen_producto)}}">Ver Más >></button>
-                                </div>
+                                    {% if producto.stock == 0 %}
+                                        <p class="agotado">Agotado</p>
+                                    {% else %}
+                                        <button class="btn_vermas" data-nombre="{{producto.nombre_producto}}" data-descripcion="{{producto.descripcion_producto}}" data-atributos='{{ producto.atributos | tojson }}' data-precio="{{producto.precio_producto}}" data-img="{{url_for('static',filename=producto.imagen_producto)}}">Ver Más >></button>
+                                    {% endif %}
+                                    </div>
                             {% else %}    
                                 <button class="btn_vermas" data-nombre="{{producto.nombre_producto}}" data-descripcion="{{producto.descripcion_producto}}" data-atributos='{{ producto.atributos | tojson }}' data-precio="{{producto.precio_producto}}" data-img="{{url_for('static',filename=producto.imagen_producto)}}">Ver Más >></button>
                             {% endif %}
@@ -132,7 +139,12 @@
     <footer>
         {% include "info/footer.html" %}
     </footer>
-<script src="{{url_for('static',filename='/js/menu.js')}}"></script>
-<script src="{{url_for('static',filename='/js/modal_producto.js')}}"></script>
+    {% if session["user_rol"]=="admin" %}
+        <script src="{{url_for('static',filename='js/eliminar_producto.js')}}"></script>                      
+    {% endif %}
+    <script src="{{url_for('static',filename='/js/menu.js')}}"></script>
+    <script src="{{url_for('static',filename='/js/modal_producto.js')}}"></script>
+    
+
 </body>
 </html>

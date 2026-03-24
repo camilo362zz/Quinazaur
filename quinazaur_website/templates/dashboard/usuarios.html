@@ -1,0 +1,15 @@
+<section class="usuarios mostrar">
+    <h2 class="titulo-datos">Hasta el momento, se han registrado {{datos[3]}} usuarios en la plataforma.</h2>
+    <div class="container-datos">
+        {% for usuario in datos[0] %}
+        <div class="card">
+            <img class="foto" src="{{url_for('static', filename='/images/usuario.svg')}}" alt="icon">
+            <div class="datos">
+                <h3>{{usuario.nombre}}</h3>
+                <p>{{usuario.email}}</p>
+                <p class="rol-usuario">{{usuario.rol}}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>

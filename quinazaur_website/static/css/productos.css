@@ -185,6 +185,24 @@ body{
     transform: scale(0.9);
 }
 
+.agotado{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #FAF9F6;
+    border-radius: 15px;
+    border: 1px solid #D4183D;
+    font-size: 0.8rem;
+    padding: 5px 10px;
+    color: #D4183D;
+}
+
+.tags_container >.tag-inactivo{
+    color: #D4183D;
+    border: 1px solid #D4183D;
+    background: #d4183e12;
+}
+
 @keyframes slidey {
     from{
         transform: translatey(100%);

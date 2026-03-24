@@ -59,6 +59,7 @@ btn.addEventListener("click", function(){
 
 // ====================================================================================
 
+const btn_add = document.getElementById("btn-agregar-atributo");
 const input = document.getElementById("atributo-input");
 const contenedor = document.getElementById("container-atributos");
 const hidden = document.getElementById("atributos-hidden");
@@ -86,6 +87,21 @@ input.addEventListener("keydown", function(e) {
 
         input.value = "";
     }
+});
+
+btn_add.addEventListener("click", function() {
+    const cantTags = tags.length
+    if (cantTags < maxTags){
+        let valor = input.value.trim();
+
+        if (valor !== "") {
+            tags.push(valor);
+            crearTag(valor);
+            actualizarHidden();
+        }
+    }
+    input.value = "";
+    
 });
 
 document.querySelectorAll(".atributo").forEach(atributo => {

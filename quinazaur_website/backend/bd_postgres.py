@@ -63,12 +63,22 @@ class bd_postgres:
         return result  
     
     def select_productos(self):
-        query="SELECT p.id_producto, p.nombre_producto, p.descripcion_producto, p.precio_producto, p.stock, p.disponible, p.imagen_producto, ARRAY_AGG(a.nombre_atributo) as atributos FROM productos.productos p LEFT JOIN productos.atributos a ON p.id_producto=a.id_producto GROUP BY p.id_producto"
+        query="SELECT p.id_producto, p.nombre_producto, p.descripcion_producto, p.precio_producto, p.stock, p.disponible, p.imagen_producto, ARRAY_AGG(a.nombre_atributo) as atributos FROM productos.productos p LEFT JOIN productos.atributos a ON p.id_producto=a.id_producto WHERE p.disponible= True GROUP BY p.id_producto "
         result=self.execute_query(query, fetch=True)
         return result  
+    
+    def select_productos_admin(self):
+        query="SELECT p.id_producto, p.nombre_producto, p.descripcion_producto, p.precio_producto, p.stock, p.disponible, p.imagen_producto, ARRAY_AGG(a.nombre_atributo) as atributos FROM productos.productos p LEFT JOIN productos.atributos a ON p.id_producto=a.id_producto GROUP BY p.id_producto"
+        result=self.execute_query(query, fetch=True)
+        return result 
 
     def cant_productos(self):
-        query="SELECT COUNT(*) AS cantidad FROM productos.productos"
+        query="SELECT COUNT(*) AS cantidad FROM productos.productos p WHERE p.disponible= True"
+        result=self.execute_query(query, fetch=True)
+        return result
+    
+    def cant_productos_admin(self):
+        query="SELECT COUNT(*) AS cantidad FROM productos.productos "
         result=self.execute_query(query, fetch=True)
         return result
     
@@ -288,3 +298,27 @@ class bd_postgres:
         if id:
             id=id[0]["id_producto"]
         self.update_atributos(id,atributos)
+
+    def get_estadisticas(self):
+        query1="select u.nombre, u.email, u.rol from usuarios.usuario u order by u.rol asc"
+        query2="select  r.nombre_receta from recetas.recetas r"    
+        query3="select p.nombre_producto, p.disponible from productos.productos p"  
+        query4="select count(*) as total from usuarios.usuario " 
+        query5="select count(*) as total from productos.productos "  
+        query6="select count(*) as total from recetas.recetas "  
+
+        datos=[]
+        usuarios=self.execute_query(query1, fetch=True)
+        productos=self.execute_query(query3, fetch=True)
+        recetas=self.execute_query(query2, fetch=True)
+        t_usuarios=self.execute_query(query4, fetch=True)[0]["total"]
+        t_productos=self.execute_query(query5, fetch=True)[0]["total"]
+        t_recetas=self.execute_query(query6, fetch=True)[0]["total"]
+
+        datos.append(usuarios)
+        datos.append(productos)
+        datos.append(recetas)
+        datos.append(t_usuarios)
+        datos.append(t_productos)
+        datos.append(t_recetas)
+        return datos
