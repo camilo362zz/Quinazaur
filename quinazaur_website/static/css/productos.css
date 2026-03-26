@@ -74,6 +74,9 @@ body{
     text-align: left;
     border: 1px solid #DAD7CD;
 }
+.descripcion_producto{
+    width: 100%;
+}
 .descripcion_producto h2{
     width: 100%;
     font-family: "Poppins";
@@ -93,9 +96,11 @@ body{
     justify-content: center;
     border-radius: 15px;
     max-width: 280px;
+    max-height: 280px;
 }
 
 .tags_container{
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
