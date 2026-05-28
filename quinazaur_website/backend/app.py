@@ -197,6 +197,9 @@ def compromiso_verde():
 @app.route("/registro", methods=["GET","POST"])
 @no_cache
 def registro():
+
+    flash("Modulo de registro no se encuentra en funcionamiento.", "error")
+    return redirect(url_for('login'))
     # VERIFICA QUE ESTE HAYA SESION ACTIVA
     if "user_id" in session:
         return redirect(url_for("inicio"))
