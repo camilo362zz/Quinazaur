@@ -10,8 +10,8 @@ from werkzeug.utils import secure_filename
 import cloudinary, cloudinary.utils, cloudinary.uploader
 # VARIABLES DE ENTORNO
 load_dotenv()
-h=os.getenv('HOST')
-p=os.getenv('PORT')
+h=os.getenv('DB_HOST')
+p=os.getenv('DB_PORT')
 d=os.getenv('DATABASE')
 u=os.getenv('USER_DB')
 pw=os.getenv('PASSWORD_DB')
